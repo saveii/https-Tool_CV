@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Document Base -->
+  <rect x="10" y="6" width="44" height="52" rx="8" fill="url(#bgGrad)" filter="url(#shadow)" />
+  
+  <!-- Fold / Accent Border -->
+  <rect x="12" y="8" width="40" height="48" rx="6" fill="#0f172a" fill-opacity="0.15" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" />
+
+  <!-- Avatar Circle -->
+  <circle cx="23" cy="22" r="6" fill="#ffffff" />
+  
+  <!-- Name & Title Lines -->
+  <rect x="33" y="18" width="15" height="3" rx="1.5" fill="#ffffff" />
+  <rect x="33" y="24" width="10" height="2" rx="1" fill="#93c5fd" />
+
+  <!-- Divider -->
+  <line x1="16" y1="32" x2="48" y2="32" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round" />
+
+  <!-- CV Body Lines -->
+  <rect x="16" y="37" width="32" height="2.5" rx="1.25" fill="#ffffff" fill-opacity="0.9" />
+  <rect x="16" y="42.5" width="24" height="2.5" rx="1.25" fill="#ffffff" fill-opacity="0.7" />
+  <rect x="16" y="48" width="28" height="2.5" rx="1.25" fill="#ffffff" fill-opacity="0.7" />
+
+  <!-- Pro Badge Star -->
+  <circle cx="48" cy="14" r="4.5" fill="#fbbf24" stroke="#ffffff" stroke-width="1" />
+  <path d="M48 11.5L48.8 13.2L50.5 13.5L49.2 14.7L49.6 16.5L48 15.6L46.4 16.5L46.8 14.7L45.5 13.5L47.2 13.2Z" fill="#78350f" />
+</svg>
