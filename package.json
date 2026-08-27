@@ -4,6 +4,7 @@
   "description": "Tool_CV — Modern Fullstack CV & Resume Builder Platform",
   "main": "server/src/server.js",
   "scripts": {
+    "build": "cd client && npm install && npm run build",
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
