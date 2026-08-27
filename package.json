@@ -1,28 +1,29 @@
 {
   "name": "tool_cv",
+  "private": true,
   "version": "1.0.0",
-  "description": "Tool_CV — Modern Fullstack CV & Resume Builder Platform",
-  "main": "server/src/server.js",
+  "type": "module",
   "scripts": {
-    "build": "cd client && npm install && npm run build",
-    "dev:server": "cd server && npm run dev",
-    "dev:client": "cd client && npm run dev",
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "start": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "install:all": "npm install && cd server && npm install && cd ../client && npm install"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "node server/src/server.js"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
+    "html2pdf.js": "^0.14.0",
+    "lucide-react": "^1.34.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "concurrently": "^9.2.4"
-  },
-  "keywords": [
-    "cv",
-    "resume",
-    "cv-builder",
-    "puppeteer-pdf",
-    "react",
-    "vite",
-    "nodejs"
-  ],
-  "author": "",
-  "license": "MIT"
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.1.0",
+    "vite": "^8.2.2"
+  }
 }
