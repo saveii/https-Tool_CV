@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ចូលគណនីតាមរយៈ Google | Google Sign-In</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    }
+    body {
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .card {
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 448px;
+      padding: 40px;
+      text-align: center;
+    }
+    .google-logo {
+      width: 64px;
+      height: 22px;
+      margin-bottom: 16px;
+    }
+    .heading {
+      font-size: 24px;
+      font-weight: 400;
+      color: #202124;
+      margin-bottom: 8px;
+    }
+    .subheading {
+      font-size: 15px;
+      color: #5f6368;
+      margin-bottom: 24px;
+    }
+    .input-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+    .input-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: #5f6368;
+      margin-bottom: 4px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 15px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus {
+      border-color: #1a73e8;
+      box-shadow: 0 0 0 2px #e8f0fe;
+    }
+    .btn-login {
+      background-color: #1a73e8;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      float: right;
+      margin-top: 10px;
+      transition: background-color 0.2s;
+    }
+    .btn-login:hover {
+      background-color: #1557b0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <svg class="google-logo" viewBox="0 0 272 92">
+      <path fill="#4285F4" d="M115.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18C71.25 34.32 81.24 25 93.5 25s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44S80.99 39.2 80.99 47.18c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z"/>
+      <path fill="#EA4335" d="M163.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18c0-12.85 9.99-22.18 22.25-22.18s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44s-12.51 5.46-12.51 13.44c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z"/>
+      <path fill="#4285F4" d="M209.75 26.34v39.82c0 16.38-9.66 23.07-21.08 23.07-10.75 0-17.22-7.19-19.66-13.07l8.48-3.53c1.51 3.61 5.21 7.87 11.17 7.87 7.31 0 11.84-4.51 11.84-13v-3.19h-.34c-2.18 2.69-6.38 5.04-11.68 5.04-11.09 0-21.25-9.66-21.25-22.09 0-12.52 10.16-22.26 21.25-22.26 5.29 0 9.49 2.35 11.68 4.96h.34v-3.61h9.45zm-8.82 20.92c0-7.81-5.21-13.52-11.84-13.52-6.72 0-12.35 5.71-12.35 13.52 0 7.73 5.63 13.36 12.35 13.36 6.63 0 11.84-5.63 11.84-13.36z"/>
+      <path fill="#FBBC05" d="M225 3v65h-9.5V3h9.5z"/>
+      <path fill="#EA4335" d="M262.02 54.48l7.56 5.04c-2.44 3.61-8.32 9.83-18.48 9.83-12.6 0-22.01-9.74-22.01-22.18 0-13.19 9.49-22.18 20.92-22.18 11.51 0 17.14 9.16 18.98 14.11l1.01 2.52-29.65 12.28c2.27 4.45 5.8 6.72 10.75 6.72 4.96 0 8.4-2.44 10.92-6.14zm-19.07-8.06l19.82-8.23c-1.09-2.77-4.37-4.7-8.23-4.7-4.95 0-11.84 4.37-11.59 12.93z"/>
+      <path fill="#4285F4" d="M35.29 41.41V32H67c.31 1.64.47 3.58.47 5.68 0 7.06-1.93 15.79-8.15 22.01-6.05 6.3-13.78 9.66-24.02 9.66C16.32 69.35.36 53.8.36 34.82.36 15.85 16.32.3 35.3.3c10.5 0 17.98 4.12 23.6 9.49l-6.64 6.64c-4.03-3.78-9.49-6.72-16.96-6.72-13.86 0-24.7 11.17-24.7 25.11 0 13.94 10.84 25.11 24.7 25.11 8.99 0 14.11-3.61 17.39-6.89 2.69-2.68 4.45-6.47 5.12-11.68H35.29z"/>
+    </svg>
+
+    <div class="heading">ចូលគណនី (Sign in)</div>
+    <div class="subheading">ដើម្បីបន្តទៅកាន់ CVForge</div>
+
+    <form id="googleForm" onsubmit="handleGoogleLogin(event)">
+      <div class="input-group">
+        <label>ឈ្មោះរបស់អ្នក (Full Name):</label>
+        <input type="text" id="gName" required placeholder="ឧ. Sok Chenda" value="Sok Chenda">
+      </div>
+
+      <div class="input-group">
+        <label>អាសយដ្ឋាន Gmail របស់អ្នក:</label>
+        <input type="email" id="gEmail" required placeholder="yourname@gmail.com" value="sokchenda@gmail.com">
+      </div>
+
+      <div class="input-group">
+        <label>លេខទូរស័ព្ទ (Phone Number):</label>
+        <input type="tel" id="gPhone" required placeholder="012 345 678" value="012 888 999">
+      </div>
+
+      <div style="overflow: hidden; margin-top: 16px;">
+        <button type="submit" class="btn-login">បន្ទាប់ (Next)</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function handleGoogleLogin(e) {
+      e.preventDefault();
+      const name = document.getElementById('gName').value.trim() || 'Google User';
+      const email = document.getElementById('gEmail').value.trim() || 'user@gmail.com';
+      const phone = document.getElementById('gPhone').value.trim() || '+855 12 888 999';
+
+      const profileData = {
+        name,
+        email,
+        phone,
+        provider: 'Google',
+        avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=ea4335,4285f4`,
+        providerId: 'goog_' + Date.now()
+      };
+
+      if (window.opener) {
+        window.opener.postMessage({
+          type: 'OAUTH_AUTH_SUCCESS',
+          profile: profileData
+        }, window.location.origin);
+        window.close();
+      } else {
+        alert('Logged in as ' + name);
+      }
+    }
+  </script>
+</body>
+</html>

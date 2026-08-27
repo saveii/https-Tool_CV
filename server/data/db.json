@@ -1,0 +1,122 @@
+{
+  "users": [
+    {
+      "id": "usr_1787848868292_e8rrq8",
+      "name": "Vireak Roth",
+      "email": "vireak@example.com",
+      "password": "$2a$10$2hK9eDVcTvImsnsoxJQ07eWV4V75lH.6ecmMzAoub/sO2n8xDcasu",
+      "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Vireak%20Roth",
+      "headline": "Software Developer / Professional",
+      "bio": "",
+      "phone": "",
+      "location": "",
+      "createdAt": "2026-08-27T16:41:08.293Z"
+    },
+    {
+      "id": "usr_1787854028294_75pb4y",
+      "name": "Google User",
+      "email": "user_7934@gmail.com",
+      "phone": "+85592132373",
+      "password": null,
+      "provider": "google",
+      "providerId": "goog_1787854027934",
+      "role": "user",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "headline": "Professional",
+      "bio": "",
+      "location": "Phnom Penh, Cambodia",
+      "createdAt": "2026-08-27T18:07:08.294Z"
+    },
+    {
+      "id": "usr_1787854045491_vco7eq",
+      "name": "Facebook User",
+      "email": "fb_5440@facebook.com",
+      "phone": "+85599068749",
+      "password": null,
+      "provider": "facebook",
+      "providerId": "fb_1787854045440",
+      "role": "user",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      "headline": "Professional",
+      "bio": "",
+      "location": "Phnom Penh, Cambodia",
+      "createdAt": "2026-08-27T18:07:25.491Z"
+    },
+    {
+      "id": "usr_1787854269314_wtay5e",
+      "name": "Facebook Account Holder",
+      "email": "saeey12goodmornig@gmail.com",
+      "phone": "069908052",
+      "password": null,
+      "provider": "facebook",
+      "providerId": "facebook_1787854268994",
+      "role": "user",
+      "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Facebook%20Account%20Holder&backgroundColor=1877f2",
+      "headline": "Professional",
+      "bio": "",
+      "location": "Phnom Penh, Cambodia",
+      "createdAt": "2026-08-27T18:11:09.314Z"
+    },
+    {
+      "id": "usr_1787854504053_4xd52q",
+      "name": "Facebook Connected User",
+      "email": "facebook_user_1192@facebook.com",
+      "phone": "+85512828539",
+      "password": null,
+      "provider": "facebook",
+      "providerId": "facebook_1787854501193",
+      "role": "user",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      "headline": "Professional",
+      "bio": "",
+      "location": "Phnom Penh, Cambodia",
+      "createdAt": "2026-08-27T18:15:04.058Z"
+    },
+    {
+      "id": "usr_1787855097107_ej8gtw",
+      "name": "Sok Chenda",
+      "email": "012888999@facebook.com",
+      "phone": "012 888 999",
+      "password": null,
+      "provider": "facebook",
+      "providerId": "fb_1787855096129",
+      "role": "user",
+      "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Sok%20Chenda&backgroundColor=1877f2",
+      "headline": "Professional",
+      "bio": "",
+      "location": "Phnom Penh, Cambodia",
+      "createdAt": "2026-08-27T18:24:57.107Z"
+    }
+  ],
+  "cvs": [],
+  "social_accounts": [
+    {
+      "id": "soc_1787855097136_xj09n7",
+      "user_id": "usr_1787855097107_ej8gtw",
+      "provider": "facebook",
+      "provider_user_id": "fb_1787855096129",
+      "access_token": "",
+      "profile_data": {
+        "name": "Sok Chenda",
+        "email": "012888999@facebook.com",
+        "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Sok%20Chenda&backgroundColor=1877f2"
+      },
+      "updated_at": "2026-08-27T18:24:57.225Z",
+      "created_at": "2026-08-27T18:24:57.225Z"
+    },
+    {
+      "id": "soc_1787855134105_f373zf",
+      "user_id": "usr_1787855097107_ej8gtw",
+      "provider": "google",
+      "provider_user_id": "goog_1787855133565",
+      "access_token": "",
+      "profile_data": {
+        "name": "Sok Chenda",
+        "email": "sokchenda@gmail.com",
+        "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Sok%20Chenda&backgroundColor=ea4335,4285f4"
+      },
+      "updated_at": "2026-08-27T18:25:34.108Z",
+      "created_at": "2026-08-27T18:25:34.108Z"
+    }
+  ]
+}

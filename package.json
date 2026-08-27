@@ -1,0 +1,27 @@
+{
+  "name": "tool_cv",
+  "version": "1.0.0",
+  "description": "Tool_CV — Modern Fullstack CV & Resume Builder Platform",
+  "main": "server/src/server.js",
+  "scripts": {
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "start": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.4"
+  },
+  "keywords": [
+    "cv",
+    "resume",
+    "cv-builder",
+    "puppeteer-pdf",
+    "react",
+    "vite",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "MIT"
+}

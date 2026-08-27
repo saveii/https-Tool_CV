@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ចូលគណនីតាម Facebook | Facebook Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+      background-color: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .fb-logo {
+      color: #1877f2;
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 396px;
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .card-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #1c1e21;
+      margin-bottom: 16px;
+    }
+    .input-group {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    .input-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #606770;
+      margin-bottom: 4px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 14px;
+      border: 1px solid #dddfe2;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus {
+      border-color: #1877f2;
+      box-shadow: 0 0 0 2px #e7f3ff;
+    }
+    .btn-login {
+      width: 100%;
+      background-color: #1877f2;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 11px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: background-color 0.2s;
+    }
+    .btn-login:hover {
+      background-color: #166fe5;
+    }
+    .footer-note {
+      margin-top: 16px;
+      font-size: 12px;
+      color: #8a8d91;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="fb-logo">facebook</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">ចូលគណនី Facebook ដើម្បីភ្ជាប់ជាមួយ CVForge</div>
+    
+    <form id="fbForm" onsubmit="handleLogin(event)">
+      <div class="input-group">
+        <label>ឈ្មោះគណនី Facebook របស់អ្នក (Full Name):</label>
+        <input type="text" id="fbName" required placeholder="ឧ. Sok Chenda / Dara" value="Sok Chenda">
+      </div>
+
+      <div class="input-group">
+        <label>លេខទូរស័ព្ទ ឬ អ៊ីមែល Facebook:</label>
+        <input type="text" id="fbContact" required placeholder="012 345 678 ឬ yourname@gmail.com" value="012 888 999">
+      </div>
+
+      <div class="input-group">
+        <label>ពាក្យសម្ងាត់ (Password):</label>
+        <input type="password" id="fbPass" required placeholder="••••••••" value="password123">
+      </div>
+
+      <button type="submit" class="btn-login">ចូលគណនី (Log In)</button>
+    </form>
+
+    <div class="footer-note">
+      🔒 ព័ត៌មានរបស់អ្នកនឹងត្រូវបានរក្សាទុកដោយសុវត្ថិភាពក្នុង MySQL Database របស់ CVForge។
+    </div>
+  </div>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      const name = document.getElementById('fbName').value.trim() || 'Facebook User';
+      const contact = document.getElementById('fbContact').value.trim() || '012 888 999';
+
+      const isEmail = contact.includes('@');
+      const email = isEmail ? contact : `${contact.replace(/[\s-+]/g, '')}@facebook.com`;
+      const phone = !isEmail ? contact : '+855 12 888 999';
+
+      const profileData = {
+        name,
+        email,
+        phone,
+        provider: 'Facebook',
+        avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=1877f2`,
+        providerId: 'fb_' + Date.now()
+      };
+
+      if (window.opener) {
+        window.opener.postMessage({
+          type: 'OAUTH_AUTH_SUCCESS',
+          profile: profileData
+        }, window.location.origin);
+        window.close();
+      } else {
+        alert('Logged in as ' + name);
+      }
+    }
+  </script>
+</body>
+</html>
