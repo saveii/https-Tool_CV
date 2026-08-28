@@ -8,7 +8,9 @@ export const initialCVData = {
     website: "https://vireakroth.dev",
     linkedin: "linkedin.com/in/vireakroth",
     github: "github.com/vireakroth",
-    photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80"
+    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80",
+    photoShape: "rounded",
+    photoSize: 130
   },
   profile: "Passionate Full Stack Engineer with 6+ years of expertise in building scalable cloud architectures, modern web applications, and intelligent systems. Demonstrated track record of delivering resilient microservices, high-performance UI/UX, and AI-driven automation workflows.",
   experience: [
@@ -128,7 +130,9 @@ export const khmerSampleCVData = {
     website: "https://vireaksok.dev",
     linkedin: "linkedin.com/in/vireaksok",
     github: "github.com/vireaksok",
-    photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80"
+    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80",
+    photoShape: "rounded",
+    photoSize: 130
   },
   profile: "វិស្វករកម្មវិធីដែលមានបទពិសោធន៍ជាង ៦ ឆ្នាំ លើការបង្កើតប្រព័ន្ធ Cloud Architecture, Web Applications ទំនើប និងប្រព័ន្ធ AI ស្វ័យប្រវត្ត។ មានសមត្ថភាពខ្ពស់ក្នុងការដឹកនាំក្រុមអភិវឌ្ឍន៍កម្មវិធី ការរចនា UI/UX ប្រកបដោយប្រសិទ្ធភាព និងការបង្កើនល្បឿនដំណើរការប្រព័ន្ធ។",
   experience: [

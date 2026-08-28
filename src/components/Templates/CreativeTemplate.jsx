@@ -30,7 +30,17 @@ export const CreativeTemplate = ({ data, themeColor, fontFamily, fontSize, visib
           <img
             src={personalInfo.photo}
             alt="Profile"
-            className="w-24 h-24 rounded-2xl object-cover border-4 border-white/80 shadow-lg"
+            style={{
+              width: `${personalInfo.photoSize || 96}px`,
+              height: `${personalInfo.photoSize || 96}px`
+            }}
+            className={`object-cover border-4 border-white/80 shadow-lg transition-all duration-300 ${
+              personalInfo.photoShape === 'circle'
+                ? 'rounded-full'
+                : personalInfo.photoShape === 'square'
+                ? 'rounded-lg'
+                : 'rounded-2xl'
+            }`}
           />
         )}
         <div className="flex-1">

@@ -50,8 +50,18 @@ export const ProfessionalTemplate = ({ data, themeColor, fontFamily, fontSize, v
           <img
             src={personalInfo.photo}
             alt="Profile"
-            className="w-24 h-24 rounded object-cover shadow border-2"
-            style={{ borderColor: themeColor }}
+            style={{
+              width: `${personalInfo.photoSize || 96}px`,
+              height: `${personalInfo.photoSize || 96}px`,
+              borderColor: themeColor
+            }}
+            className={`object-cover shadow border-2 transition-all duration-300 ${
+              personalInfo.photoShape === 'circle'
+                ? 'rounded-full'
+                : personalInfo.photoShape === 'square'
+                ? 'rounded-lg'
+                : 'rounded-2xl'
+            }`}
           />
         )}
       </div>

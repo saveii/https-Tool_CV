@@ -214,12 +214,34 @@ export const CVProvider = ({ children }) => {
 
   // Reset to Sample or Blank
   const resetToSample = (lang = language) => {
+    const existingPhoto = cvData.personalInfo?.photo;
+    const existingShape = cvData.personalInfo?.photoShape;
+    const existingSize = cvData.personalInfo?.photoSize;
+
     if (lang === 'km') {
-      setCvData(khmerSampleCVData);
+      const mergedKhmerData = {
+        ...khmerSampleCVData,
+        personalInfo: {
+          ...khmerSampleCVData.personalInfo,
+          ...(existingPhoto ? { photo: existingPhoto } : {}),
+          photoShape: existingShape || khmerSampleCVData.personalInfo.photoShape || 'rounded',
+          photoSize: existingSize || khmerSampleCVData.personalInfo.photoSize || 130
+        }
+      };
+      setCvData(mergedKhmerData);
       setSettings(prev => ({ ...prev, fontFamily: 'Kantumruy Pro' }));
       showToast('បានបញ្ចូលទិន្នន័យគំរូភាសាខ្មែររួចរាល់!');
     } else {
-      setCvData(initialCVData);
+      const mergedEnData = {
+        ...initialCVData,
+        personalInfo: {
+          ...initialCVData.personalInfo,
+          ...(existingPhoto ? { photo: existingPhoto } : {}),
+          photoShape: existingShape || initialCVData.personalInfo.photoShape || 'rounded',
+          photoSize: existingSize || initialCVData.personalInfo.photoSize || 130
+        }
+      };
+      setCvData(mergedEnData);
       setSettings(prev => ({ ...prev, fontFamily: 'Inter' }));
       showToast('Loaded English sample CV data!');
     }
