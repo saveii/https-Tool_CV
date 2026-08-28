@@ -267,6 +267,8 @@ export const FONT_OPTIONS = [
 export const TEMPLATES = [
   { id: "modern", name: "Modern", description: "2-column layout with sidebar and accent headers" },
   { id: "professional", name: "Professional", description: "Executive corporate layout with classic structure" },
+  { id: "executive", name: "Executive", description: "Premium executive header banner with progress gauges and dual column" },
+  { id: "tech", name: "Tech / Dev", description: "Dark modern developer theme with tech chips and code projects" },
   { id: "minimal", name: "Minimal", description: "Clean airy whitespace and modern minimalist lines" },
   { id: "creative", name: "Creative", description: "Vibrant gradient header banner with timeline connectors" },
   { id: "simple", name: "Simple", description: "ATS-standard clean single-column format" },

@@ -6,6 +6,8 @@ import { ProfessionalTemplate } from '../Templates/ProfessionalTemplate';
 import { MinimalTemplate } from '../Templates/MinimalTemplate';
 import { CreativeTemplate } from '../Templates/CreativeTemplate';
 import { SimpleTemplate } from '../Templates/SimpleTemplate';
+import { ExecutiveTemplate } from '../Templates/ExecutiveTemplate';
+import { TechTemplate } from '../Templates/TechTemplate';
 
 import {
   ZoomIn,
@@ -64,6 +66,10 @@ export const PreviewContainer = () => {
         return <ModernTemplate {...props} />;
       case 'professional':
         return <ProfessionalTemplate {...props} />;
+      case 'executive':
+        return <ExecutiveTemplate {...props} />;
+      case 'tech':
+        return <TechTemplate {...props} />;
       case 'minimal':
         return <MinimalTemplate {...props} />;
       case 'creative':

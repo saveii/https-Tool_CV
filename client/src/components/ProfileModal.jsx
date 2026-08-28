@@ -156,22 +156,20 @@ export const ProfileModal = ({ isOpen, onClose, onOpenAdminModal }) => {
               <button
                 type="button"
                 onClick={() => setLanguage('km')}
-                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition ${
-                  language === 'km'
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition ${language === 'km'
                     ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-400 hover:text-white hover:bg-slate-900'
-                }`}
+                  }`}
               >
                 🇰🇭 ខ្មែរ
               </button>
               <button
                 type="button"
                 onClick={() => setLanguage('en')}
-                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition ${
-                  language === 'en'
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition ${language === 'en'
                     ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-400 hover:text-white hover:bg-slate-900'
-                }`}
+                  }`}
               >
                 🇬🇧 EN
               </button>
@@ -188,11 +186,10 @@ export const ProfileModal = ({ isOpen, onClose, onOpenAdminModal }) => {
               <button
                 type="button"
                 onClick={() => setDarkMode(false)}
-                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition flex items-center gap-1 ${
-                  !darkMode
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition flex items-center gap-1 ${!darkMode
                     ? 'bg-amber-500 text-slate-950 font-extrabold shadow-sm'
                     : 'text-slate-400 hover:text-white hover:bg-slate-900'
-                }`}
+                  }`}
               >
                 <Sun className="w-3 h-3 text-current" />
                 <span>{language === 'km' ? 'ថ្ងៃ ☀️' : 'Light'}</span>
@@ -200,11 +197,10 @@ export const ProfileModal = ({ isOpen, onClose, onOpenAdminModal }) => {
               <button
                 type="button"
                 onClick={() => setDarkMode(true)}
-                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition flex items-center gap-1 ${
-                  darkMode
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition flex items-center gap-1 ${darkMode
                     ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-400 hover:text-white hover:bg-slate-900'
-                }`}
+                  }`}
               >
                 <Moon className="w-3 h-3 text-current" />
                 <span>{language === 'km' ? 'យប់ 🌙' : 'Dark'}</span>
@@ -217,33 +213,30 @@ export const ProfileModal = ({ isOpen, onClose, onOpenAdminModal }) => {
         <div className="flex bg-slate-950 p-1 rounded-xl border border-slate-800 my-3 shrink-0 overflow-x-auto no-scrollbar">
           <button
             onClick={() => setActiveTab('saved')}
-            className={`flex-1 py-1.5 px-2 text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 whitespace-nowrap ${
-              activeTab === 'saved'
+            className={`flex-1 py-1.5 px-2 text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 whitespace-nowrap ${activeTab === 'saved'
                 ? 'bg-blue-600 text-white shadow'
                 : 'text-slate-400 hover:text-white'
-            }`}
+              }`}
           >
             <FolderOpen className="w-3.5 h-3.5" />
             <span>{t('mySavedCVs')} ({savedCVs.length})</span>
           </button>
           <button
             onClick={() => setActiveTab('actions')}
-            className={`flex-1 py-1.5 px-2 text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 whitespace-nowrap ${
-              activeTab === 'actions'
+            className={`flex-1 py-1.5 px-2 text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 whitespace-nowrap ${activeTab === 'actions'
                 ? 'bg-blue-600 text-white shadow'
                 : 'text-slate-400 hover:text-white'
-            }`}
+              }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>{language === 'km' ? 'ឧបករណ៍ & គំរូ' : 'Tools & Samples'}</span>
           </button>
           <button
             onClick={() => setActiveTab('social')}
-            className={`flex-1 py-1.5 px-2 text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 whitespace-nowrap ${
-              activeTab === 'social'
+            className={`flex-1 py-1.5 px-2 text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 whitespace-nowrap ${activeTab === 'social'
                 ? 'bg-blue-600 text-white shadow'
                 : 'text-slate-400 hover:text-white'
-            }`}
+              }`}
           >
             <Link2 className="w-3.5 h-3.5" />
             <span>{language === 'km' ? 'ភ្ជាប់គណនី' : 'Social Link'}</span>
@@ -251,11 +244,10 @@ export const ProfileModal = ({ isOpen, onClose, onOpenAdminModal }) => {
           {user && (
             <button
               onClick={() => setActiveTab('settings')}
-              className={`flex-1 py-1.5 px-2 text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 whitespace-nowrap ${
-                activeTab === 'settings'
+              className={`flex-1 py-1.5 px-2 text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5 whitespace-nowrap ${activeTab === 'settings'
                   ? 'bg-blue-600 text-white shadow'
                   : 'text-slate-400 hover:text-white'
-              }`}
+                }`}
             >
               <Settings className="w-3.5 h-3.5" />
               <span>{t('accountSettings')}</span>
@@ -306,11 +298,10 @@ export const ProfileModal = ({ isOpen, onClose, onOpenAdminModal }) => {
                     return (
                       <div
                         key={cv.id}
-                        className={`p-3 rounded-xl border transition relative flex flex-col justify-between ${
-                          isCurrentlyOpen
+                        className={`p-3 rounded-xl border transition relative flex flex-col justify-between ${isCurrentlyOpen
                             ? 'bg-blue-950/30 border-blue-500/50 shadow-lg'
                             : 'bg-slate-950 border-slate-800 hover:border-slate-700'
-                        }`}
+                          }`}
                       >
                         <div>
                           <div className="flex items-center justify-between mb-1">
@@ -550,6 +541,11 @@ export const ProfileModal = ({ isOpen, onClose, onOpenAdminModal }) => {
           )}
         </div>
       </div>
+
+
+
+
+
     </div>
   );
 };
