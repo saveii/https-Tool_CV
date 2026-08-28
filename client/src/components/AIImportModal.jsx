@@ -306,25 +306,59 @@ export const AIImportModal = ({ isOpen, onClose }) => {
     }
   };
 
-  const handleApplyToCV = () => {
+  const handleApplyToCV = async () => {
     if (extractedData) {
-      setCvData(prev => ({
-        ...prev,
+      const candidateName = extractedData.personalInfo?.fullName || 'Paskal Rian Duha';
+      const newDocTitle = `CV - ${candidateName} (Link Import)`;
+      const newCvId = 'cv_' + Date.now();
+
+      const newCvFullData = {
         ...extractedData,
         personalInfo: {
           ...extractedData.personalInfo,
-          photo: extractedData.personalInfo?.photo || prev.personalInfo?.photo || ''
+          photo: extractedData.personalInfo?.photo || imageUrl || ''
         }
-      }));
+      };
 
-      // Apply Matching Template & Color
-      updateSetting('themeColor', '#3e7bbd');
+      // 1. Create brand new document ID and Title
+      if (setCurrentCvId) setCurrentCvId(newCvId);
+      if (setCvTitle) setCvTitle(newDocTitle);
+
+      // 2. Set the newly extracted CV Data
+      setCvData(newCvFullData);
+
+      // 3. Switch to matching Infographic template & theme color
+      updateSetting('themeColor', '#2563eb');
       updateSetting('template', 'infographic');
+      updateSetting('fontFamily', 'Kantumruy Pro');
+
+      // 4. Save this new document to Saved CVs (Local & Cloud)
+      try {
+        const localCVs = JSON.parse(localStorage.getItem('tool_cv_local_saved_cvs') || '[]');
+        const newCVRecord = {
+          id: newCvId,
+          title: newDocTitle,
+          template: 'infographic',
+          themeColor: '#2563eb',
+          fontFamily: 'Kantumruy Pro',
+          fontSize: 'medium',
+          data: newCvFullData,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+        localCVs.unshift(newCVRecord);
+        localStorage.setItem('tool_cv_local_saved_cvs', JSON.stringify(localCVs));
+        if (setSavedCVs) {
+          setSavedCVs(localCVs);
+        }
+      } catch (_) {}
+
+      if (triggerConfetti) triggerConfetti();
 
       showToast(
         language === 'km'
-          ? '🎉 បានទាញយកគំរូ និងបំពេញទិន្នន័យពី Link CV ជោគជ័យ!'
-          : '🎉 Successfully imported CV template and data from Link!'
+          ? `🎉 បានបង្កើតឯកសារ CV ថ្មី "${newDocTitle}" តាមរយៈ Link ជោគជ័យ!`
+          : `🎉 Successfully created new CV document "${newDocTitle}" from Link!`
       );
       handleClose();
     }
