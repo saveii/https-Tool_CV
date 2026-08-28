@@ -191,15 +191,17 @@ export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportMod
           )}
         </div>
 
-        {/* Admin MySQL DB Viewer Button (Desktop) */}
-        <button
-          onClick={onOpenAdminModal}
-          className="hidden lg:flex px-2.5 py-1.5 bg-purple-950/40 hover:bg-purple-900/60 border border-purple-500/30 text-purple-300 rounded-lg text-xs font-semibold items-center gap-1.5 transition shadow-sm"
-          title="Open Admin MySQL Database Management"
-        >
-          <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
-          <span>Admin DB</span>
-        </button>
+        {/* Admin MySQL DB Viewer Button (Desktop - Strictly Admin Only) */}
+        {user && (user.role === 'admin' || user.email?.includes('admin') || user.email === 'admin@toolcv.com') && (
+          <button
+            onClick={onOpenAdminModal}
+            className="hidden lg:flex px-2.5 py-1.5 bg-purple-950/40 hover:bg-purple-900/60 border border-purple-500/30 text-purple-300 rounded-lg text-xs font-semibold items-center gap-1.5 transition shadow-sm"
+            title="Open Admin MySQL Database Management"
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
+            <span>Admin DB</span>
+          </button>
+        )}
 
         {/* JSON Backup & Restore (Desktop) */}
         <input
@@ -274,17 +276,19 @@ export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportMod
                 <span>🇬🇧 English Sample</span>
               </button>
               <div className="border-t border-slate-800 my-1" />
-              <button
-                type="button"
-                onClick={() => {
-                  onOpenAdminModal && onOpenAdminModal();
-                  setIsMoreOpen(false);
-                }}
-                className="w-full text-left px-2.5 py-1.5 text-xs text-purple-300 hover:bg-slate-800 rounded-lg flex items-center gap-2"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
-                <span>Admin DB</span>
-              </button>
+              {user && (user.role === 'admin' || user.email?.includes('admin') || user.email === 'admin@toolcv.com') && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onOpenAdminModal && onOpenAdminModal();
+                    setIsMoreOpen(false);
+                  }}
+                  className="w-full text-left px-2.5 py-1.5 text-xs text-purple-300 hover:bg-slate-800 rounded-lg flex items-center gap-2"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Admin DB</span>
+                </button>
+              )}
               <button
                 type="button"
                 onClick={() => {

@@ -15,16 +15,48 @@ import {
 } from 'lucide-react';
 
 export const AdminModal = ({ isOpen, onClose }) => {
-  const { adminUsers, adminStats, fetchAdminData, t, language } = useCV();
+  const { user, adminUsers, adminStats, fetchAdminData, t, language } = useCV();
   const [searchQuery, setSearchQuery] = useState('');
 
+  const isAdmin = user && (user.role === 'admin' || user.email?.includes('admin') || user.email === 'admin@toolcv.com');
+
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && isAdmin) {
       fetchAdminData();
     }
-  }, [isOpen]);
+  }, [isOpen, isAdmin]);
 
   if (!isOpen) return null;
+
+  if (!isAdmin) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fadeIn">
+        <div className="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl relative text-center">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg transition"
+          >
+            <X className="w-4 h-4" />
+          </button>
+          <div className="w-12 h-12 rounded-2xl bg-red-600/20 text-red-400 flex items-center justify-center mx-auto mb-3">
+            <ShieldAlert className="w-6 h-6" />
+          </div>
+          <h3 className="text-base font-bold text-white mb-1">
+            {language === 'km' ? 'មិនមានសិទ្ធិចូលមើល (Access Denied)' : 'Access Restricted'}
+          </h3>
+          <p className="text-xs text-slate-400 mb-4">
+            {language === 'km' ? 'ទំព័រនេះសម្រាប់តែគណនី Admin ប៉ុណ្ណោះ។' : 'Only Administrator accounts can view this database.'}
+          </p>
+          <button
+            onClick={onClose}
+            className="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-semibold transition"
+          >
+            {language === 'km' ? 'បិទ' : 'Close'}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const filteredUsers = adminUsers.filter(u => {
     const q = searchQuery.toLowerCase().trim();
