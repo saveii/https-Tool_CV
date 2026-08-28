@@ -36,7 +36,17 @@ export const InfographicTemplate = ({ data, themeColor = '#2563eb', fontFamily, 
               <img
                 src={personalInfo.photo || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(personalInfo.fullName || 'User')}&backgroundColor=ffffff`}
                 alt={personalInfo.fullName}
-                className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-xl bg-white"
+                style={{
+                  width: `${personalInfo.photoSize || 128}px`,
+                  height: `${personalInfo.photoSize || 128}px`
+                }}
+                className={`object-cover border-4 border-white shadow-xl bg-white transition-all duration-300 ${
+                  personalInfo.photoShape === 'rounded'
+                    ? 'rounded-3xl'
+                    : personalInfo.photoShape === 'square'
+                    ? 'rounded-2xl'
+                    : 'rounded-full'
+                }`}
               />
             </div>
           </div>

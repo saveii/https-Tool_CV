@@ -28,8 +28,18 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, fontSize, visible
             <img
               src={personalInfo.photo}
               alt={personalInfo.fullName}
-              className="w-28 h-28 rounded-full object-cover shadow-md border-3"
-              style={{ borderColor: themeColor }}
+              style={{
+                width: `${personalInfo.photoSize || 112}px`,
+                height: `${personalInfo.photoSize || 112}px`,
+                borderColor: themeColor
+              }}
+              className={`object-cover shadow-md border-2 transition-all duration-300 ${
+                personalInfo.photoShape === 'rounded'
+                  ? 'rounded-2xl'
+                  : personalInfo.photoShape === 'square'
+                  ? 'rounded-lg'
+                  : 'rounded-full'
+              }`}
             />
           </div>
         )}
