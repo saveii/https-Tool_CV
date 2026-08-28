@@ -18,7 +18,9 @@ import {
   LogOut,
   LogIn,
   Check,
-  Settings
+  Settings,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 export const ProfileModal = ({ isOpen, onClose, onOpenAdminModal }) => {
@@ -37,6 +39,9 @@ export const ProfileModal = ({ isOpen, onClose, onOpenAdminModal }) => {
     setCvTitle,
     language,
     setLanguage,
+    darkMode,
+    setDarkMode,
+    toggleDarkMode,
     resetToSample,
     exportJSON,
     importJSON,
@@ -138,37 +143,70 @@ export const ProfileModal = ({ isOpen, onClose, onOpenAdminModal }) => {
           )}
         </div>
 
-        {/* Language Selection Bar */}
-        <div className="pt-3 pb-1 shrink-0">
+        {/* Language & Theme Controls Grid (Day/Night ☀️/🌙) */}
+        <div className="pt-3 pb-1 shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {/* Language Switcher */}
           <div className="bg-slate-950 p-1.5 rounded-xl border border-slate-800 flex items-center justify-between gap-2">
             <span className="text-xs font-semibold text-slate-400 flex items-center gap-1.5 pl-2">
               <Languages className="w-3.5 h-3.5 text-blue-400" />
-              <span>{language === 'km' ? 'ភាសា / Language:' : 'Language:'}</span>
+              <span>{language === 'km' ? 'ភាសា:' : 'Language:'}</span>
             </span>
-            <div className="flex gap-1.5">
+            <div className="flex gap-1">
               <button
                 type="button"
                 onClick={() => setLanguage('km')}
-                className={`px-3 py-1 text-xs font-bold rounded-lg transition flex items-center gap-1.5 ${
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition ${
                   language === 'km'
                     ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-400 hover:text-white hover:bg-slate-900'
                 }`}
               >
-                <span>🇰🇭 ភាសាខ្មែរ</span>
-                {language === 'km' && <Check className="w-3 h-3" />}
+                🇰🇭 ខ្មែរ
               </button>
               <button
                 type="button"
                 onClick={() => setLanguage('en')}
-                className={`px-3 py-1 text-xs font-bold rounded-lg transition flex items-center gap-1.5 ${
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition ${
                   language === 'en'
                     ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-400 hover:text-white hover:bg-slate-900'
                 }`}
               >
-                <span>🇬🇧 English</span>
-                {language === 'en' && <Check className="w-3 h-3" />}
+                🇬🇧 EN
+              </button>
+            </div>
+          </div>
+
+          {/* Day / Night Theme Switcher (របៀបថ្ងៃ ☀️ / របៀបយប់ 🌙) */}
+          <div className="bg-slate-950 p-1.5 rounded-xl border border-slate-800 flex items-center justify-between gap-2">
+            <span className="text-xs font-semibold text-slate-400 flex items-center gap-1.5 pl-2">
+              {darkMode ? <Moon className="w-3.5 h-3.5 text-indigo-400" /> : <Sun className="w-3.5 h-3.5 text-amber-400" />}
+              <span>{language === 'km' ? 'ពន្លឺ/ងងឹត:' : 'Theme:'}</span>
+            </span>
+            <div className="flex gap-1">
+              <button
+                type="button"
+                onClick={() => setDarkMode(false)}
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition flex items-center gap-1 ${
+                  !darkMode
+                    ? 'bg-amber-500 text-slate-950 font-extrabold shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-900'
+                }`}
+              >
+                <Sun className="w-3 h-3 text-current" />
+                <span>{language === 'km' ? 'ថ្ងៃ ☀️' : 'Light'}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setDarkMode(true)}
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition flex items-center gap-1 ${
+                  darkMode
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-900'
+                }`}
+              >
+                <Moon className="w-3 h-3 text-current" />
+                <span>{language === 'km' ? 'យប់ 🌙' : 'Dark'}</span>
               </button>
             </div>
           </div>

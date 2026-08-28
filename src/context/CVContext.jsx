@@ -21,6 +21,48 @@ export const CVProvider = ({ children }) => {
     showToast(lang === 'km' ? 'បានប្តូរទៅភាសាខ្មែរ 🇰🇭' : 'Switched to English 🇬🇧');
   };
 
+  // 0.1 Day / Night Theme Mode (Dark Mode 🌙 / Light Mode ☀️)
+  const [darkMode, setDarkModeState] = useState(() => {
+    try {
+      const saved = localStorage.getItem('tool_cv_theme');
+      return saved ? saved === 'dark' : true;
+    } catch {
+      return true;
+    }
+  });
+
+  const setDarkMode = (val) => {
+    setDarkModeState(val);
+    localStorage.setItem('tool_cv_theme', val ? 'dark' : 'light');
+    if (val) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+    }
+  };
+
+  const toggleDarkMode = () => {
+    const nextVal = !darkMode;
+    setDarkMode(nextVal);
+    showToast(
+      nextVal
+        ? (language === 'km' ? '🌙 បានបើករបៀបយប់ (Dark Mode)' : '🌙 Dark Mode activated')
+        : (language === 'km' ? '☀️ បានបើករបៀបថ្ងៃ (Light Mode)' : '☀️ Light Mode activated')
+    );
+  };
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+    }
+  }, [darkMode]);
+
   // Translation helper function
   const t = (key) => {
     if (translations[language] && translations[language][key]) {
@@ -667,6 +709,11 @@ export const CVProvider = ({ children }) => {
         language,
         setLanguage,
         t,
+
+        // Day / Night Theme (Dark Mode 🌙 / Light Mode ☀️)
+        darkMode,
+        setDarkMode,
+        toggleDarkMode,
 
         // CV State
         cvData,

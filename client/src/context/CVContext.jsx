@@ -21,6 +21,48 @@ export const CVProvider = ({ children }) => {
     showToast(lang === 'km' ? 'បានប្តូរទៅភាសាខ្មែរ 🇰🇭' : 'Switched to English 🇬🇧');
   };
 
+  // 0.1 Day / Night Theme Mode (Dark Mode 🌙 / Light Mode ☀️)
+  const [darkMode, setDarkModeState] = useState(() => {
+    try {
+      const saved = localStorage.getItem('tool_cv_theme');
+      return saved ? saved === 'dark' : true;
+    } catch {
+      return true;
+    }
+  });
+
+  const setDarkMode = (val) => {
+    setDarkModeState(val);
+    localStorage.setItem('tool_cv_theme', val ? 'dark' : 'light');
+    if (val) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+    }
+  };
+
+  const toggleDarkMode = () => {
+    const nextVal = !darkMode;
+    setDarkMode(nextVal);
+    showToast(
+      nextVal
+        ? (language === 'km' ? '🌙 បានបើករបៀបយប់ (Dark Mode)' : '🌙 Dark Mode activated')
+        : (language === 'km' ? '☀️ បានបើករបៀបថ្ងៃ (Light Mode)' : '☀️ Light Mode activated')
+    );
+  };
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+    }
+  }, [darkMode]);
+
   // Translation helper function
   const t = (key) => {
     if (translations[language] && translations[language][key]) {
@@ -236,12 +278,10 @@ export const CVProvider = ({ children }) => {
       });
 
       if (!res.ok) {
-        // If server returns 405/404 (e.g. on static Vercel deployment), fallback to local offline auth store
         if (res.status === 404 || res.status === 405 || res.status >= 500 || data.error?.includes('405')) {
           const cleanId = (identifier || '').toLowerCase().trim();
           const cleanPass = password || '';
 
-          // Check default admin
           if ((cleanId === 'admin@toolcv.com' || cleanId === 'admin@cvforge.com' || cleanId === '+855 12 888 999' || cleanId === '012888999') && cleanPass === 'admin123') {
             const adminUser = {
               id: 'usr_admin_master',
@@ -263,7 +303,6 @@ export const CVProvider = ({ children }) => {
             return { success: true };
           }
 
-          // Check local users
           const localUsers = JSON.parse(localStorage.getItem('tool_cv_local_users') || '[]');
           const found = localUsers.find(u => 
             (u.email && u.email.toLowerCase() === cleanId) ||
@@ -306,7 +345,6 @@ export const CVProvider = ({ children }) => {
       });
 
       if (!res.ok) {
-        // If server returns 405/404 (e.g. on static Vercel deployment), create local user
         if (res.status === 404 || res.status === 405 || res.status >= 500 || data.error?.includes('405')) {
           const localUsers = JSON.parse(localStorage.getItem('tool_cv_local_users') || '[]');
           const cleanEmail = (email || '').toLowerCase().trim();
@@ -354,7 +392,6 @@ export const CVProvider = ({ children }) => {
     }
   };
 
-  // Social Auth (Google / Facebook)
   const socialLogin = async (provider, profileData) => {
     try {
       const { res, data } = await safeApiFetch('/api/auth/social-login', {
@@ -421,7 +458,6 @@ export const CVProvider = ({ children }) => {
     setSavedCVs([]);
     setCurrentCvId(null);
     showToast(language === 'km' ? 'បានចាកចេញពីគណនីដោយជោគជ័យ។' : 'Logged out successfully.');
-    // Prompt gate login again
     setIsAuthModalOpen(true);
   };
 
@@ -442,7 +478,6 @@ export const CVProvider = ({ children }) => {
     }
   };
 
-  // Fetch Admin Database users
   const fetchAdminData = async () => {
     try {
       const { res, data } = await safeApiFetch('/api/auth/admin/users');
@@ -455,7 +490,6 @@ export const CVProvider = ({ children }) => {
     }
   };
 
-  // CV Cloud Database Operations
   const fetchSavedCVs = async () => {
     if (!token) return;
     try {
@@ -558,7 +592,6 @@ export const CVProvider = ({ children }) => {
     }
   };
 
-  // PDF Export Flow (Puppeteer Server-Side with Client Fallback)
   const exportPDF = async () => {
     setIsExporting(true);
     showToast(language === 'km' ? 'កំពុងបង្កើត និងទាញយក file PDF A4...' : 'Generating high-resolution A4 PDF...', 'info');
@@ -596,7 +629,6 @@ export const CVProvider = ({ children }) => {
       showToast(language === 'km' ? '🎉 បានទាញយក PDF គុណភាពខ្ពស់ដោយជោគជ័យ!' : '🎉 High-Quality PDF downloaded successfully!');
     } catch (err) {
       console.warn('Puppeteer error fallback to client print/html2pdf:', err);
-      // Fallback to client print / html2pdf
       try {
         const element = document.getElementById('cv-preview-sheet');
         if (element) {
@@ -623,7 +655,6 @@ export const CVProvider = ({ children }) => {
     }
   };
 
-  // JSON Export / Import
   const exportJSON = () => {
     const exportData = {
       version: '1.0',
@@ -667,6 +698,11 @@ export const CVProvider = ({ children }) => {
         language,
         setLanguage,
         t,
+
+        // Day / Night Theme (Dark Mode 🌙 / Light Mode ☀️)
+        darkMode,
+        setDarkMode,
+        toggleDarkMode,
 
         // CV State
         cvData,

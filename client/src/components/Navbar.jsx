@@ -14,7 +14,9 @@ import {
   Languages,
   ChevronDown,
   ShieldCheck,
-  MoreVertical
+  MoreVertical,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportModal }) => {
@@ -34,6 +36,8 @@ export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportMod
     isExporting,
     language,
     setLanguage,
+    darkMode,
+    toggleDarkMode,
     t
   } = useCV();
 
@@ -148,6 +152,26 @@ export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportMod
             </div>
           )}
         </div>
+
+        {/* Day / Night Theme Toggle Button (Desktop) */}
+        <button
+          type="button"
+          onClick={toggleDarkMode}
+          className="px-2.5 py-1.5 bg-slate-800/90 hover:bg-slate-800 border border-slate-700 text-slate-200 rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-sm transition"
+          title={darkMode ? 'Switch to Light Mode (របៀបថ្ងៃ ☀️)' : 'Switch to Dark Mode (របៀបយប់ 🌙)'}
+        >
+          {darkMode ? (
+            <>
+              <Sun className="w-3.5 h-3.5 text-amber-400" />
+              <span className="hidden xl:inline">{language === 'km' ? 'ថ្ងៃ ☀️' : 'Light'}</span>
+            </>
+          ) : (
+            <>
+              <Moon className="w-3.5 h-3.5 text-indigo-400" />
+              <span className="hidden xl:inline">{language === 'km' ? 'យប់ 🌙' : 'Dark'}</span>
+            </>
+          )}
+        </button>
 
         {/* Sample Data Dropdown (Desktop & Tablet) */}
         <div className="relative hidden md:block">
