@@ -19,7 +19,17 @@ import {
 } from 'lucide-react';
 
 export const AIImportModal = ({ isOpen, onClose }) => {
-  const { setCvData, updateSetting, showToast, t, language } = useCV();
+  const {
+    setCvData,
+    updateSetting,
+    showToast,
+    t,
+    language,
+    setCvTitle,
+    setCurrentCvId,
+    setSavedCVs,
+    triggerConfetti
+  } = useCV();
 
   const [activeTab, setActiveTab] = useState('url'); // 'url' | 'file' | 'text'
   const [imageUrl, setImageUrl] = useState('');

@@ -674,6 +674,7 @@ export const CVProvider = ({ children }) => {
         settings,
         setSettings,
         currentCvId,
+        setCurrentCvId,
         cvTitle,
         setCvTitle,
         zoomLevel,
@@ -716,6 +717,7 @@ export const CVProvider = ({ children }) => {
 
         // Cloud CVs
         savedCVs,
+        setSavedCVs,
         fetchSavedCVs,
         saveCV,
         loadSavedCV,
