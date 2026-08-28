@@ -25,12 +25,12 @@
       border-radius: 8px;
       width: 100%;
       max-width: 448px;
-      padding: 40px;
+      padding: 40px 36px;
       text-align: center;
     }
     .google-logo {
-      width: 64px;
-      height: 22px;
+      width: 74px;
+      height: 24px;
       margin-bottom: 16px;
     }
     .heading {
@@ -44,45 +44,69 @@
       color: #5f6368;
       margin-bottom: 24px;
     }
-    .input-group {
-      margin-bottom: 16px;
+
+    /* Floating Labels Google Style */
+    .floating-group {
+      position: relative;
+      margin-bottom: 20px;
       text-align: left;
     }
-    .input-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 500;
-      color: #5f6368;
-      margin-bottom: 4px;
-    }
-    input {
+    .floating-group input {
       width: 100%;
-      padding: 12px 14px;
+      height: 56px;
+      padding: 16px 14px 4px 14px;
       font-size: 15px;
+      color: #202124;
       border: 1px solid #dadce0;
       border-radius: 4px;
       outline: none;
-      transition: border-color 0.2s;
+      background: #ffffff;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    input:focus {
+    .floating-group label {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #5f6368;
+      pointer-events: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      background: transparent;
+      user-select: none;
+    }
+    .floating-group input:focus ~ label,
+    .floating-group input:not(:placeholder-shown) ~ label {
+      top: 13px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #1a73e8;
+    }
+    .floating-group input:focus {
       border-color: #1a73e8;
-      box-shadow: 0 0 0 2px #e8f0fe;
+      border-width: 2px;
+      padding-left: 13px;
     }
+    .floating-group input:not(:focus):not(:placeholder-shown) ~ label {
+      color: #5f6368;
+    }
+
     .btn-login {
       background-color: #1a73e8;
       color: #ffffff;
       font-size: 14px;
       font-weight: 500;
-      padding: 10px 24px;
+      padding: 11px 28px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       float: right;
       margin-top: 10px;
-      transition: background-color 0.2s;
+      transition: background-color 0.2s, box-shadow 0.2s;
     }
     .btn-login:hover {
       background-color: #1557b0;
+      box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3);
     }
   </style>
 </head>
@@ -101,19 +125,22 @@
     <div class="subheading">ដើម្បីបន្តទៅកាន់ CVForge</div>
 
     <form id="googleForm" onsubmit="handleGoogleLogin(event)">
-      <div class="input-group">
-        <label>ឈ្មោះរបស់អ្នក (Full Name):</label>
-        <input type="text" id="gName" required placeholder="ឧ. Sok Chenda" value="Sok Chenda">
+      <!-- Name Field -->
+      <div class="floating-group">
+        <input type="text" id="gName" required placeholder=" " autocomplete="name">
+        <label for="gName">ឈ្មោះរបស់អ្នក (Full Name)</label>
       </div>
 
-      <div class="input-group">
-        <label>អាសយដ្ឋាន Gmail របស់អ្នក:</label>
-        <input type="email" id="gEmail" required placeholder="yourname@gmail.com" value="sokchenda@gmail.com">
+      <!-- Email Field -->
+      <div class="floating-group">
+        <input type="email" id="gEmail" required placeholder=" " autocomplete="email">
+        <label for="gEmail">អាសយដ្ឋាន Gmail របស់អ្នក</label>
       </div>
 
-      <div class="input-group">
-        <label>លេខទូរស័ព្ទ (Phone Number):</label>
-        <input type="tel" id="gPhone" required placeholder="012 345 678" value="012 888 999">
+      <!-- Phone Field -->
+      <div class="floating-group">
+        <input type="tel" id="gPhone" required placeholder=" " autocomplete="tel">
+        <label for="gPhone">លេខទូរស័ព្ទ (Phone Number)</label>
       </div>
 
       <div style="overflow: hidden; margin-top: 16px;">

