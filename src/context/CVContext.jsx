@@ -199,15 +199,41 @@ export const CVProvider = ({ children }) => {
     showToast(language === 'km' ? 'បានលុបទិន្នន័យទាំងអស់។' : 'All CV data cleared.', 'info');
   };
 
+  // Safe API Fetch Wrapper with Tunnel bypass & JSON safeguards
+  const safeApiFetch = async (url, options = {}) => {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Bypass-Tunnel-Reminder': 'true',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(options.headers || {})
+    };
+    const res = await fetch(url, { ...options, headers });
+    let data = {};
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      try {
+        data = await res.json();
+      } catch (_) {
+        data = { error: 'ទម្រង់ឆ្លើយតបពី Server មិនត្រឹមត្រូវ (Invalid JSON response)' };
+      }
+    } else {
+      const text = await res.text().catch(() => '');
+      try {
+        data = JSON.parse(text);
+      } catch (_) {
+        data = { error: text || `Server error (${res.status})` };
+      }
+    }
+    return { res, data };
+  };
+
   // Auth Operations
   const login = async (identifier, password) => {
     try {
-      const res = await fetch('/api/auth/login', {
+      const { res, data } = await safeApiFetch('/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identifier, password })
       });
-      const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Login failed');
 
       setToken(data.token);
@@ -225,12 +251,10 @@ export const CVProvider = ({ children }) => {
 
   const register = async (name, email, phone, password) => {
     try {
-      const res = await fetch('/api/auth/register', {
+      const { res, data } = await safeApiFetch('/api/auth/register', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, phone, password })
       });
-      const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Registration failed');
 
       setToken(data.token);
@@ -249,9 +273,8 @@ export const CVProvider = ({ children }) => {
   // Social Auth (Google / Facebook)
   const socialLogin = async (provider, profileData) => {
     try {
-      const res = await fetch('/api/auth/social-login', {
+      const { res, data } = await safeApiFetch('/api/auth/social-login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           provider,
           name: profileData.name,
@@ -261,7 +284,6 @@ export const CVProvider = ({ children }) => {
           providerId: profileData.providerId
         })
       });
-      const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Social login failed');
 
       setToken(data.token);
@@ -294,15 +316,10 @@ export const CVProvider = ({ children }) => {
   const updateProfileData = async (updatedData) => {
     if (!token) return;
     try {
-      const res = await fetch('/api/auth/profile', {
+      const { res, data } = await safeApiFetch('/api/auth/profile', {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
         body: JSON.stringify(updatedData)
       });
-      const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Profile update failed');
 
       setUser(data.user);
@@ -316,8 +333,7 @@ export const CVProvider = ({ children }) => {
   // Fetch Admin Database users
   const fetchAdminData = async () => {
     try {
-      const res = await fetch('/api/auth/admin/users');
-      const data = await res.json();
+      const { res, data } = await safeApiFetch('/api/auth/admin/users');
       if (res.ok) {
         setAdminUsers(data.users || []);
         setAdminStats(data.stats || null);
@@ -331,10 +347,7 @@ export const CVProvider = ({ children }) => {
   const fetchSavedCVs = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/cvs', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const data = await res.json();
+      const { res, data } = await safeApiFetch('/api/cvs');
       if (res.ok) {
         setSavedCVs(data.cvs || []);
       }
@@ -364,16 +377,11 @@ export const CVProvider = ({ children }) => {
       const url = currentCvId ? `/api/cvs/${currentCvId}` : '/api/cvs';
       const method = currentCvId ? 'PUT' : 'POST';
 
-      const res = await fetch(url, {
+      const { res, data } = await safeApiFetch(url, {
         method,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
         body: JSON.stringify(payload)
       });
 
-      const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to save CV');
 
       setCurrentCvId(data.cv.id);
@@ -403,11 +411,10 @@ export const CVProvider = ({ children }) => {
   const deleteSavedCV = async (id) => {
     if (!token) return;
     try {
-      const res = await fetch(`/api/cvs/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` }
+      const { res, data } = await safeApiFetch(`/api/cvs/${id}`, {
+        method: 'DELETE'
       });
-      if (!res.ok) throw new Error('Failed to delete CV');
+      if (!res.ok) throw new Error(data.error || 'Failed to delete CV');
 
       if (currentCvId === id) setCurrentCvId(null);
       fetchSavedCVs();

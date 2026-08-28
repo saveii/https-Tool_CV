@@ -128,6 +128,8 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
+  bool _obscurePassword = true;
+
   Widget _buildField(String label, TextEditingController controller, IconData icon, {bool isPassword = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,10 +138,20 @@ class _AuthScreenState extends State<AuthScreen> {
         const SizedBox(height: 6),
         TextField(
           controller: controller,
-          obscureText: isPassword,
+          obscureText: isPassword ? _obscurePassword : false,
           style: const TextStyle(fontSize: 13, color: Colors.white),
           decoration: InputDecoration(
             prefixIcon: Icon(icon, color: const Color(0xFF64748B), size: 18),
+            suffixIcon: isPassword
+                ? IconButton(
+                    icon: Icon(
+                      _obscurePassword ? Icons.visibility_off_rounded : Icons.visibility_rounded,
+                      color: const Color(0xFF64748B),
+                      size: 18,
+                    ),
+                    onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                  )
+                : null,
             filled: true,
             fillColor: const Color(0xFF0F172A),
             contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),

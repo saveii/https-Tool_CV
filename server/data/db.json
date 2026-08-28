@@ -59,10 +59,10 @@
     },
     {
       "id": "usr_1787854269314_wtay5e",
-      "name": "Facebook Account Holder",
+      "name": "good",
       "email": "saeey12goodmornig@gmail.com",
-      "phone": "069908052",
-      "password": null,
+      "phone": "088854433",
+      "password": "$2a$10$7vUh85hT6iNd4POriouIQ.fibrzSQRFWPRX5iDz4DLq7gBx1zUm6W",
       "provider": "facebook",
       "providerId": "facebook_1787854268994",
       "role": "user",
@@ -70,7 +70,8 @@
       "headline": "Professional",
       "bio": "",
       "location": "Phnom Penh, Cambodia",
-      "createdAt": "2026-08-27T18:11:09.314Z"
+      "createdAt": "2026-08-27T18:11:09.314Z",
+      "updatedAt": "2026-08-28T13:26:34.464Z"
     },
     {
       "id": "usr_1787854504053_4xd52q",

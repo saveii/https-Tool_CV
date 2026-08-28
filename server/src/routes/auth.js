@@ -22,12 +22,35 @@ router.post('/register', async (req, res) => {
     // Check if Email OR Phone is already registered (1 Account per Phone Number rule)
     const existingUser = await dbOps.findUserByEmailOrPhone(email, phone);
     if (existingUser) {
-      if (existingUser.phone && phone && existingUser.phone.replace(/[\s-]/g, '') === phone.replace(/[\s-]/g, '')) {
-        return res.status(400).json({
-          error: 'លេខទូរស័ព្ទនេះត្រូវបានចុះឈ្មោះរួចហើយ! នៅក្នុងមួយលេខទូរស័ព្ទអាចបង្កើតបានតែ ១ គណនីប៉ុណ្ណោះ។ (Phone number already registered. Only 1 account is allowed per phone number.)'
+      // If user exists without password (e.g. registered via Facebook/Google), allow them to set password and update their account!
+      if (!existingUser.password) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        await dbOps.updateUser(existingUser.id, {
+          password: hashedPassword,
+          phone: phone ? phone.trim() : existingUser.phone,
+          name: name ? name.trim() : existingUser.name
+        });
+        const updated = await dbOps.findUserById(existingUser.id);
+        const token = jwt.sign(
+          { id: updated.id, email: updated.email, name: updated.name, role: updated.role },
+          JWT_SECRET,
+          { expiresIn: '30d' }
+        );
+        const { password: _, ...userWithoutPassword } = updated;
+        return res.status(200).json({
+          message: 'គណនីរបស់អ្នកត្រូវបានភ្ជាប់ជាមួយពាក្យសម្ងាត់រួចរាល់!',
+          token,
+          user: userWithoutPassword
         });
       }
-      return res.status(400).json({ error: 'អ៊ីមែលនេះត្រូវបានចុះឈ្មោះរួចហើយ! (Email already registered.)' });
+
+      if (existingUser.phone && phone && existingUser.phone.replace(/[\s-]/g, '') === phone.replace(/[\s-]/g, '')) {
+        return res.status(400).json({
+          error: 'លេខទូរស័ព្ទនេះត្រូវបានចុះឈ្មោះរួចហើយ! នៅក្នុងមួយលេខទូរស័ព្ទអាចបង្កើតបានតែ ១ គណនីប៉ុណ្ណោះ។'
+        });
+      }
+      return res.status(400).json({ error: 'អ៊ីមែលនេះត្រូវបានចុះឈ្មោះរួចហើយ! សូមចុចចូលគណនី (Sign In)' });
     }
 
     const salt = await bcrypt.genSalt(10);
