@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useCV } from '../../context/CVContext';
-import { User, Mail, Phone, MapPin, Globe, Link2, GitBranch, Upload, X, Crop, Sliders, Briefcase } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Globe, Link2, GitBranch, Upload, X, Crop, Sliders, Briefcase, ZoomIn, ZoomOut } from 'lucide-react';
 import { PhotoCropModal } from '../PhotoCropModal';
 
 export const PersonalInfoForm = () => {
@@ -131,67 +131,129 @@ export const PersonalInfoForm = () => {
 
         {/* Quick Photo Dimension & Shape Toolbar */}
         {personalInfo.photo && (
-          <div className="pt-3 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {/* Shape Control */}
-            <div>
-              <label className="block text-[10.5px] font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                {language === 'km' ? 'រាងរូបថតលើ CV' : 'CV Photo Shape'}
-              </label>
-              <div className="flex gap-1.5">
-                {[
-                  { id: 'circle', label: language === 'km' ? 'មូល' : 'Circle' },
-                  { id: 'rounded', label: language === 'km' ? 'ជ្រុងកោង' : 'Rounded' },
-                  { id: 'square', label: language === 'km' ? 'ការ៉េ' : 'Square' }
-                ].map((s) => (
-                  <button
-                    key={s.id}
-                    type="button"
-                    onClick={() => {
-                      updatePersonalInfo('photoShape', s.id);
-                      updateSetting('photoShape', s.id);
-                    }}
-                    className={`flex-1 py-1 text-[11px] font-medium rounded-lg border transition ${
-                      currentShape === s.id
-                        ? 'bg-blue-600 text-white border-blue-500 shadow-sm'
-                        : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    {s.label}
-                  </button>
-                ))}
+          <div className="pt-3 border-t border-slate-800/80 space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Shape Control */}
+              <div>
+                <label className="block text-[10.5px] font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                  {language === 'km' ? 'រាងរូបថតលើ CV' : 'CV Photo Shape'}
+                </label>
+                <div className="flex gap-1.5">
+                  {[
+                    { id: 'circle', label: language === 'km' ? 'មូល' : 'Circle' },
+                    { id: 'rounded', label: language === 'km' ? 'ជ្រុងកោង' : 'Rounded' },
+                    { id: 'square', label: language === 'km' ? 'ការ៉េ' : 'Square' }
+                  ].map((s) => (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => {
+                        updatePersonalInfo('photoShape', s.id);
+                        updateSetting('photoShape', s.id);
+                      }}
+                      className={`flex-1 py-1.5 text-[11px] font-medium rounded-lg border transition ${
+                        currentShape === s.id
+                          ? 'bg-blue-600 text-white border-blue-500 shadow-sm font-bold'
+                          : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                      }`}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick Presets */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-[10.5px] font-semibold text-slate-400 uppercase tracking-wider">
+                    {language === 'km' ? 'កម្រិតទំហំលឿន' : 'Quick Sizes'}
+                  </label>
+                  <span className="text-[11px] font-mono font-bold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
+                    {currentSize}px
+                  </span>
+                </div>
+                <div className="flex gap-1.5">
+                  {[
+                    { size: 85, label: language === 'km' ? 'តូច' : 'Small' },
+                    { size: 115, label: language === 'km' ? 'មធ្យម' : 'Medium' },
+                    { size: 145, label: language === 'km' ? 'ធំ' : 'Large' },
+                    { size: 180, label: language === 'km' ? 'ធំខ្លាំង' : 'X-Large' }
+                  ].map((sz) => (
+                    <button
+                      key={sz.size}
+                      type="button"
+                      onClick={() => {
+                        updatePersonalInfo('photoSize', sz.size);
+                        updateSetting('photoSize', sz.size);
+                      }}
+                      className={`flex-1 py-1.5 text-[11px] font-medium rounded-lg border transition ${
+                        Math.abs(currentSize - sz.size) <= 5
+                          ? 'bg-blue-600 text-white border-blue-500 shadow-sm font-bold'
+                          : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                      }`}
+                    >
+                      {sz.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Size Control */}
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <label className="text-[10.5px] font-semibold text-slate-400 uppercase tracking-wider">
-                  {language === 'km' ? 'ទំហំរូបលើ CV' : 'CV Photo Size'}
-                </label>
-                <span className="text-[11px] font-mono font-bold text-blue-400">{currentSize}px</span>
-              </div>
-              <div className="flex gap-1.5">
-                {[
-                  { size: 90, label: language === 'km' ? 'តូច (90px)' : 'Small' },
-                  { size: 125, label: language === 'km' ? 'មធ្យម (125px)' : 'Medium' },
-                  { size: 155, label: language === 'km' ? 'ធំ (155px)' : 'Large' }
-                ].map((sz) => (
+            {/* Smooth Range Slider (ទាញរំកិលពង្រីក-បង្រួមទំហំរូបភាព) */}
+            <div className="p-2.5 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+              <div className="flex items-center justify-between text-xs text-slate-300">
+                <span className="font-semibold text-[11px] flex items-center gap-1.5 text-slate-300">
+                  <Sliders className="w-3.5 h-3.5 text-blue-400" />
+                  <span>{language === 'km' ? 'ទាញរំកិលទំហំរូបភាព (Drag to Resize / Zoom):' : 'Drag Slider to Resize:'}</span>
+                </span>
+                <div className="flex items-center gap-1">
                   <button
-                    key={sz.size}
                     type="button"
                     onClick={() => {
-                      updatePersonalInfo('photoSize', sz.size);
-                      updateSetting('photoSize', sz.size);
+                      const newSize = Math.max(60, currentSize - 5);
+                      updatePersonalInfo('photoSize', newSize);
+                      updateSetting('photoSize', newSize);
                     }}
-                    className={`flex-1 py-1 text-[11px] font-medium rounded-lg border transition ${
-                      currentSize === sz.size
-                        ? 'bg-blue-600 text-white border-blue-500 shadow-sm'
-                        : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
-                    }`}
+                    className="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-white transition"
+                    title="Zoom Out (-5px)"
                   >
-                    {sz.label}
+                    <ZoomOut className="w-3.5 h-3.5" />
                   </button>
-                ))}
+                  <span className="text-xs font-mono font-bold text-blue-400 w-12 text-center">
+                    {currentSize}px
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newSize = Math.min(220, currentSize + 5);
+                      updatePersonalInfo('photoSize', newSize);
+                      updateSetting('photoSize', newSize);
+                    }}
+                    className="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-white transition"
+                    title="Zoom In (+5px)"
+                  >
+                    <ZoomIn className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] text-slate-500 font-mono">60px</span>
+                <input
+                  type="range"
+                  min="60"
+                  max="220"
+                  step="2"
+                  value={currentSize}
+                  onChange={(e) => {
+                    const newSize = Number(e.target.value);
+                    updatePersonalInfo('photoSize', newSize);
+                    updateSetting('photoSize', newSize);
+                  }}
+                  className="flex-1 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-400"
+                />
+                <span className="text-[10px] text-slate-500 font-mono">220px</span>
               </div>
             </div>
           </div>
