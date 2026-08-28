@@ -74,4 +74,3 @@ VALUES (
   `password` = VALUES(`password`),
   `role` = 'admin',
   `name` = VALUES(`name`);
-
