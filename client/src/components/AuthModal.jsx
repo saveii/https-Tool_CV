@@ -166,7 +166,7 @@ export const AuthModal = () => {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-base sm:text-xs text-white focus:border-blue-500 focus:outline-none"
                 />
               </div>
 
@@ -185,7 +185,7 @@ export const AuthModal = () => {
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono"
+                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-base sm:text-xs text-white focus:border-blue-500 focus:outline-none font-mono"
                 />
               </div>
 
@@ -199,7 +199,7 @@ export const AuthModal = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-base sm:text-xs text-white focus:border-blue-500 focus:outline-none"
                 />
               </div>
             </>
@@ -215,7 +215,7 @@ export const AuthModal = () => {
                 required
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-base sm:text-xs text-white focus:border-blue-500 focus:outline-none"
               />
             </div>
           )}
@@ -231,7 +231,7 @@ export const AuthModal = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 pr-10 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:border-blue-500 focus:outline-none font-mono"
+                className="w-full px-3 py-2 pr-10 bg-slate-950 border border-slate-800 rounded-xl text-base sm:text-xs text-white focus:border-blue-500 focus:outline-none font-mono"
               />
               <button
                 type="button"
