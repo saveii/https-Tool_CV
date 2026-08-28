@@ -101,8 +101,8 @@ export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportMod
         </div>
       </div>
 
-      {/* Right Action Tools */}
-      <div className="flex items-center gap-1.5 sm:gap-2">
+      {/* Right Action Tools (Desktop only - Mobile uses bottom Profile / Account tab) */}
+      <div className="hidden lg:flex items-center gap-1.5 sm:gap-2">
         {/* Language Switcher Dropdown */}
         <div className="relative">
           <button

@@ -70,13 +70,23 @@ export const MobileBottomNav = ({
         <span className="text-[10px]">{language === 'km' ? 'ម៉ូដ & ពណ៌' : 'Styles'}</span>
       </button>
 
-      {/* 5. Account / Admin */}
+      {/* 5. Account / Settings (Icon រូបមនុស្ស) */}
       <button
-        onClick={user ? onOpenProfile : onOpenAdmin}
+        onClick={onOpenProfile}
         className="flex flex-col items-center gap-1 py-1 px-2.5 text-slate-400 hover:text-slate-200 transition"
       >
-        <User className="w-4 h-4" />
-        <span className="text-[10px]">{user ? user.name.split(' ')[0] : 'Account'}</span>
+        {user?.avatar ? (
+          <img
+            src={user.avatar}
+            alt={user.name}
+            className="w-4 h-4 rounded-full object-cover border border-blue-400"
+          />
+        ) : (
+          <User className="w-4 h-4" />
+        )}
+        <span className="text-[10px] truncate max-w-[60px]">
+          {user ? user.name.split(' ')[0] : (language === 'km' ? 'គណនី' : 'Account')}
+        </span>
       </button>
     </nav>
   );
