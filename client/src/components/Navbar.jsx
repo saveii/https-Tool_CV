@@ -16,7 +16,8 @@ import {
   ShieldCheck,
   MoreVertical,
   Sun,
-  Moon
+  Moon,
+  Trash2
 } from 'lucide-react';
 
 export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportModal }) => {
@@ -211,6 +212,22 @@ export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportMod
                 <span>🇬🇧</span>
                 <span>{t('sampleEnglish')}</span>
               </button>
+              <div className="border-t border-slate-800 my-1" />
+              <button
+                onClick={() => {
+                  const confirmMsg = language === 'km'
+                    ? 'តើអ្នកប្រាកដជាចង់លុប និងសម្អាតទិន្នន័យ CV ទាំងអស់មែនទេ?'
+                    : 'Clear all CV data?';
+                  if (window.confirm(confirmMsg)) {
+                    clearAllData();
+                    setIsSampleOpen(false);
+                  }
+                }}
+                className="w-full text-left px-3 py-2 rounded-lg text-xs font-medium text-red-400 hover:bg-red-500/10 flex items-center gap-2 transition"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>{language === 'km' ? '🗑️ សម្អាតទិន្នន័យទាំងអស់' : 'Clear All Data'}</span>
+              </button>
             </div>
           )}
         </div>
@@ -323,6 +340,22 @@ export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportMod
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Export Backup (JSON)</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const confirmMsg = language === 'km'
+                    ? 'តើអ្នកប្រាកដជាចង់លុប និងសម្អាតទិន្នន័យ CV ទាំងអស់មែនទេ?'
+                    : 'Clear all CV data?';
+                  if (window.confirm(confirmMsg)) {
+                    clearAllData();
+                    setIsMoreOpen(false);
+                  }
+                }}
+                className="w-full text-left px-2.5 py-1.5 text-xs text-red-400 hover:bg-red-500/10 rounded-lg flex items-center gap-2"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>{language === 'km' ? '🗑️ សម្អាតទិន្នន័យទាំងអស់' : 'Clear All Data'}</span>
               </button>
             </div>
           )}

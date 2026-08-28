@@ -248,8 +248,20 @@ export const CVProvider = ({ children }) => {
   };
 
   const clearAllData = () => {
-    setCvData({
-      personalInfo: { fullName: '', jobTitle: '', email: '', phone: '', location: '', website: '', linkedin: '', github: '', photo: '' },
+    const emptyCV = {
+      personalInfo: {
+        fullName: '',
+        jobTitle: '',
+        email: '',
+        phone: '',
+        location: '',
+        website: '',
+        linkedin: '',
+        github: '',
+        photo: '',
+        photoShape: 'rounded',
+        photoSize: 130
+      },
       profile: '',
       experience: [],
       education: [],
@@ -259,8 +271,12 @@ export const CVProvider = ({ children }) => {
       projects: [],
       references: [],
       customSections: []
-    });
-    showToast(language === 'km' ? 'បានលុបទិន្នន័យទាំងអស់។' : 'All CV data cleared.', 'info');
+    };
+    setCvData(emptyCV);
+    setCurrentCvId(null);
+    setCvTitle('My Professional CV');
+    localStorage.setItem('tool_cv_data', JSON.stringify(emptyCV));
+    showToast(language === 'km' ? '🗑️ បានលុប និងសម្អាតទិន្នន័យ CV ទាំងអស់រួចរាល់!' : '🗑️ All CV data has been cleared!', 'info');
   };
 
   // Safe API Fetch Wrapper with Tunnel bypass & JSON safeguards

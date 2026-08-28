@@ -1,10 +1,10 @@
 import React from 'react';
 import { useCV } from '../../context/CVContext';
-import { Eye, EyeOff, Sliders, Palette, Type, LayoutTemplate } from 'lucide-react';
+import { Eye, EyeOff, Sliders, Palette, Type, LayoutTemplate, Trash2 } from 'lucide-react';
 import { THEME_COLORS, FONT_OPTIONS, TEMPLATES } from '../../data/initialCV';
 
 export const SectionManager = () => {
-  const { settings, updateSetting, toggleSection, t } = useCV();
+  const { settings, updateSetting, toggleSection, clearAllData, resetToSample, language, t } = useCV();
   const { visibleSections = {}, template, themeColor, fontFamily, fontSize } = settings;
 
   const sectionsList = [
@@ -163,6 +163,43 @@ export const SectionManager = () => {
               </button>
             );
           })}
+        </div>
+      </div>
+
+      {/* Quick Reset & Clear All Data Actions */}
+      <div className="pt-4 border-t border-slate-800 space-y-3">
+        <label className="block text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+          <Trash2 className="w-3.5 h-3.5 text-red-400" />
+          <span>{language === 'km' ? 'គ្រប់គ្រងទិន្នន័យ CV (Reset / Clear Data)' : 'Reset / Clear CV Data'}</span>
+        </label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              if (window.confirm(language === 'km' ? 'តើអ្នកចង់បញ្ចូលទិន្នន័យគំរូឡើងវិញមែនទេ?' : 'Reload sample data?')) {
+                resetToSample(language);
+              }
+            }}
+            className="p-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition"
+          >
+            <span>✨ {language === 'km' ? 'បញ្ចូលទិន្នន័យគំរូឡើងវិញ' : 'Reload Sample Data'}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              const confirmMsg = language === 'km'
+                ? 'តើអ្នកប្រាកដជាចង់លុប និងសម្អាតទិន្នន័យ CV ទាំងអស់មែនទេ? (ស៊ុបទិន្នន័យទាំងអស់)'
+                : 'Are you sure you want to clear all CV data?';
+              if (window.confirm(confirmMsg)) {
+                clearAllData();
+              }
+            }}
+            className="p-2.5 bg-red-600/10 hover:bg-red-600/20 text-red-400 border border-red-500/20 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition"
+          >
+            <Trash2 className="w-3.5 h-3.5" />
+            <span>{language === 'km' ? '🗑️ សម្អាតទិន្នន័យទាំងអស់ (Clear All)' : 'Clear All Data'}</span>
+          </button>
         </div>
       </div>
     </div>

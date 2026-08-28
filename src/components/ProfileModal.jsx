@@ -43,6 +43,7 @@ export const ProfileModal = ({ isOpen, onClose, onOpenAdminModal }) => {
     setDarkMode,
     toggleDarkMode,
     resetToSample,
+    clearAllData,
     exportJSON,
     importJSON,
     showToast,
@@ -427,6 +428,37 @@ export const ProfileModal = ({ isOpen, onClose, onOpenAdminModal }) => {
                     <span>{t('exportBackup')}</span>
                   </button>
                 </div>
+              </div>
+
+              {/* Clear / Reset All CV Data (ស៊ុបទិន្នន័យទាំងអស់) */}
+              <div className="p-3 bg-red-950/20 border border-red-500/30 rounded-xl space-y-2">
+                <div className="text-xs font-bold text-red-300 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <Trash2 className="w-3.5 h-3.5 text-red-400" />
+                    <span>{language === 'km' ? 'សម្អាត / ស៊ុបទិន្នន័យទាំងអស់ (Clear All)' : 'Clear All CV Content'}</span>
+                  </div>
+                </div>
+                <p className="text-[11px] text-slate-400">
+                  {language === 'km'
+                    ? 'លុបទិន្នន័យដែលបានបំពេញទាំងអស់ក្នុង CV ដើម្បីចាប់ផ្តើមបំពេញពីទំព័រទទេឡើងវិញ'
+                    : 'Clear all fields to reset your CV back to an empty blank document.'}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const confirmMsg = language === 'km'
+                      ? 'តើអ្នកប្រាកដជាចង់លុប និងសម្អាតទិន្នន័យ CV ទាំងអស់មែនទេ? (ទិន្នន័យមិនទាន់ Save នឹងត្រូវបាត់បង់)'
+                      : 'Are you sure you want to completely clear all CV data?';
+                    if (window.confirm(confirmMsg)) {
+                      clearAllData();
+                      onClose();
+                    }
+                  }}
+                  className="w-full py-2 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>{language === 'km' ? '🗑️ លុបទិន្នន័យទាំងអស់ចេញ (Clear Blank)' : 'Clear All CV Data'}</span>
+                </button>
               </div>
 
               {/* Admin Database Access (Admin Only) */}
