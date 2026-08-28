@@ -56,15 +56,22 @@ CREATE TABLE IF NOT EXISTS `cvs` (
   INDEX `idx_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Insert Default Admin Account (Password: admin123)
-INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `provider`, `role`, `headline`)
+-- Insert Default Master Admin Account (Email: admin@toolcv.com | Password: admin123 | Phone: +855 12 888 999)
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `provider`, `role`, `avatar`, `headline`, `bio`, `location`)
 VALUES (
   'usr_admin_master',
-  'CVForge Admin Master',
-  'admin@cvforge.com',
-  '+855 12 999 888',
-  '$2a$10$iI8Y0NqB8aJ7n1yG0S0TteHh7q5V8u6RjW3K7n2X9Z8m5L6Q4P3E2',
+  'System Administrator',
+  'admin@toolcv.com',
+  '+855 12 888 999',
+  '$2a$10$V5XPL6zj3YRWgXNTXeZPwONaZPipKKS8Mgj9dvxkQp6JH6PFUHf/6',
   'local',
   'admin',
-  'System Administrator'
-) ON DUPLICATE KEY UPDATE `role`='admin';
+  'https://api.dicebear.com/7.x/initials/svg?seed=Admin%20System&backgroundColor=2563eb',
+  'Full-Access Master Administrator',
+  'System Root Administrator for Tool_CV Platform',
+  'Phnom Penh, Cambodia'
+) ON DUPLICATE KEY UPDATE 
+  `password` = VALUES(`password`),
+  `role` = 'admin',
+  `name` = VALUES(`name`);
+

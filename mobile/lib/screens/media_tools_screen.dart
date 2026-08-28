@@ -95,7 +95,7 @@ class _MediaToolsScreenState extends State<MediaToolsScreen> {
                 decoration: BoxDecoration(
                   color: const Color(0xFF0F172A),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFF10B981).withOpacity(0.4)),
+                  border: Border.all(color: const Color(0xFF10B981).withValues(alpha: 0.4)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

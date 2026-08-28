@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -65,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                   end: Alignment.bottomRight,
                 ),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFF3B82F6).withOpacity(0.3)),
+                border: Border.all(color: const Color(0xFF3B82F6).withValues(alpha: 0.3)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.blueAccent.withOpacity(0.3),
+                      color: Colors.blueAccent.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: const Text(
@@ -148,7 +149,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 _buildToolCard(
                   icon: Icons.subtitles_rounded,
-                  iconColor: Colors.emeraldAccent,
+                  iconColor: const Color(0xFF10B981),
                   title: 'Auto Subtitles',
                   subtitle: 'ដាក់អក្សររត់ & បកប្រែ',
                   badge: 'Speech AI',
@@ -180,12 +181,12 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.between,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: iconColor.withOpacity(0.15),
+                  color: iconColor.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(icon, color: iconColor, size: 22),

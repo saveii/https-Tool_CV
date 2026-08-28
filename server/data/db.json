@@ -1,6 +1,21 @@
 {
   "users": [
     {
+      "id": "usr_admin_master",
+      "name": "System Administrator",
+      "email": "admin@toolcv.com",
+      "phone": "+855 12 888 999",
+      "password": "$2a$10$V5XPL6zj3YRWgXNTXeZPwONaZPipKKS8Mgj9dvxkQp6JH6PFUHf/6",
+      "provider": "local",
+      "providerId": null,
+      "role": "admin",
+      "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Admin%20System&backgroundColor=2563eb",
+      "headline": "Full-Access Master Administrator",
+      "bio": "System Root Administrator for Tool_CV Platform",
+      "location": "Phnom Penh, Cambodia",
+      "createdAt": "2026-08-28T12:00:00.000Z"
+    },
+    {
       "id": "usr_1787848868292_e8rrq8",
       "name": "Vireak Roth",
       "email": "vireak@example.com",
@@ -86,6 +101,35 @@
       "bio": "",
       "location": "Phnom Penh, Cambodia",
       "createdAt": "2026-08-27T18:24:57.107Z"
+    },
+    {
+      "id": "usr_1787919205499_pwrt3r",
+      "name": "sav eii",
+      "email": "dadadaad12@gmail.com",
+      "phone": "098324567",
+      "password": "$2a$10$3l0ziF10kK3pP8gqGZkmN.mWUwsMmSfEA.2rh98E0QevTdEuZvPLS",
+      "provider": "local",
+      "role": "user",
+      "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=sav%20eii",
+      "headline": "Software Specialist / Professional",
+      "bio": "",
+      "location": "Phnom Penh, Cambodia",
+      "createdAt": "2026-08-28T12:13:25.508Z"
+    },
+    {
+      "id": "usr_1787920084881_z3otwa",
+      "name": "លោក ដង្ខៅ",
+      "email": "0717290442@facebook.com",
+      "phone": "0717290442",
+      "password": null,
+      "provider": "facebook",
+      "providerId": "fb_1787920078780",
+      "role": "user",
+      "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=%E1%9E%9B%E1%9F%84%E1%9E%80%20%E1%9E%8A%E1%9E%84%E1%9F%92%E1%9E%81%E1%9F%85&backgroundColor=1877f2",
+      "headline": "Professional",
+      "bio": "",
+      "location": "Phnom Penh, Cambodia",
+      "createdAt": "2026-08-28T12:28:04.882Z"
     }
   ],
   "cvs": [],
@@ -117,6 +161,20 @@
       },
       "updated_at": "2026-08-27T18:25:34.108Z",
       "created_at": "2026-08-27T18:25:34.108Z"
+    },
+    {
+      "id": "soc_1787920084887_usti43",
+      "user_id": "usr_1787920084881_z3otwa",
+      "provider": "facebook",
+      "provider_user_id": "fb_1787920078780",
+      "access_token": "",
+      "profile_data": {
+        "name": "លោក ដង្ខៅ",
+        "email": "0717290442@facebook.com",
+        "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=%E1%9E%9B%E1%9F%84%E1%9E%80%20%E1%9E%8A%E1%9E%84%E1%9F%92%E1%9E%81%E1%9F%85&backgroundColor=1877f2"
+      },
+      "updated_at": "2026-08-28T12:28:04.889Z",
+      "created_at": "2026-08-28T12:28:04.889Z"
     }
   ]
 }

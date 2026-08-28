@@ -11,6 +11,9 @@ export default defineConfig({
   server: {
     host: '0.0.0.0', // Allow connections from Mobile Phones on same Wi-Fi
     port: 3000,
+    watch: {
+      ignored: ['**/mobile/**', '**/server/**', '**/data/**']
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:5000',

@@ -30,6 +30,7 @@ class _AuthScreenState extends State<AuthScreen> {
       );
     }
     setState(() => _isLoading = false);
+    if (!mounted) return;
 
     if (result['success'] == true || result['token'] != null) {
       ScaffoldMessenger.of(context).showSnackBar(

@@ -111,8 +111,7 @@ class ApiService {
         return response.bodyBytes;
       }
       return null;
-    } catch (e) {
-      print('PDF Export Error: $e');
+    } catch (_) {
       return null;
     }
   }

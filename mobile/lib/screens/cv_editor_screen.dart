@@ -22,6 +22,7 @@ class _CvEditorScreenState extends State<CvEditorScreen> {
     setState(() => _isScanning = true);
     final result = await ApiService.scanCvImageUrl(_linkController.text.trim());
     setState(() => _isScanning = false);
+    if (!mounted) return;
 
     if (result['success'] == true && result['data'] != null) {
       final info = result['data']['personalInfo'] ?? {};
@@ -65,7 +66,7 @@ class _CvEditorScreenState extends State<CvEditorScreen> {
               decoration: BoxDecoration(
                 color: const Color(0xFF0F172A),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFF3B82F6).withOpacity(0.4)),
+                border: Border.all(color: const Color(0xFF3B82F6).withValues(alpha: 0.4)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

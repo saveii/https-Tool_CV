@@ -32,9 +32,8 @@ class ToolSystemApp extends StatelessWidget {
           primary: Color(0xFF2563EB),
           secondary: Color(0xFF6366F1),
           surface: Color(0xFF0F172A),
-          background: Color(0xFF090D16),
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: const Color(0xFF0F172A),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
