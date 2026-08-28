@@ -20,23 +20,36 @@ try {
 // Helper: Resolve social media & webpage links (Pinterest pin.it, Instagram, Web) to direct image URL
 const resolveDirectImageUrl = async (targetUrl) => {
   try {
+    // If targetUrl already looks like a direct image URL (e.g. .jpg, .jpeg, .png, .webp, i.pinimg.com)
+    const isDirectPattern = /\.(jpg|jpeg|png|webp|gif)(\?.*)?$/i.test(targetUrl) || targetUrl.includes('i.pinimg.com');
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3500);
+
     const res = await fetch(targetUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
       },
-      redirect: 'follow'
-    });
+      redirect: 'follow',
+      signal: controller.signal
+    }).catch(() => null);
+
+    clearTimeout(timeoutId);
+
+    if (!res) {
+      return { directImageUrl: targetUrl, imageBuffer: null };
+    }
 
     const contentType = res.headers.get('content-type') || '';
 
     // If it's already a direct image
-    if (contentType.startsWith('image/')) {
-      const buffer = Buffer.from(await res.arrayBuffer());
-      return { directImageUrl: targetUrl, imageBuffer: buffer };
+    if (contentType.startsWith('image/') || isDirectPattern) {
+      const buffer = Buffer.from(await res.arrayBuffer().catch(() => []));
+      return { directImageUrl: targetUrl, imageBuffer: buffer.length > 0 ? buffer : null };
     }
 
     // If it's an HTML webpage (e.g. pin.it / pinterest.com / webpage)
-    const htmlText = await res.text();
+    const htmlText = await res.text().catch(() => '');
 
     // Extract OpenGraph Image or Twitter Image
     const ogMatch = htmlText.match(/<meta\s+(?:property|name)=["'](?:og:image|twitter:image)["']\s+content=["'](.*?)["']/i) ||
@@ -54,18 +67,17 @@ const resolveDirectImageUrl = async (targetUrl) => {
     }
 
     if (extractedImgUrl) {
-      // Decode HTML entities in URL
       extractedImgUrl = extractedImgUrl.replace(/&amp;/g, '&');
-
-      // Fetch the actual image buffer
       const imgRes = await fetch(extractedImgUrl, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-        }
-      });
-      if (imgRes.ok) {
-        const buffer = Buffer.from(await imgRes.arrayBuffer());
-        return { directImageUrl: extractedImgUrl, imageBuffer: buffer };
+        },
+        signal: AbortSignal.timeout(3000)
+      }).catch(() => null);
+
+      if (imgRes && imgRes.ok) {
+        const buffer = Buffer.from(await imgRes.arrayBuffer().catch(() => []));
+        return { directImageUrl: extractedImgUrl, imageBuffer: buffer.length > 0 ? buffer : null };
       }
     }
 

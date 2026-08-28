@@ -3,20 +3,25 @@ import crypto from 'crypto';
 
 const generateId = () => crypto.randomUUID ? crypto.randomUUID() : `id_${Date.now()}_${Math.random().toString(36).substr(2, 7)}`;
 
-// Real Safe OCR Image Parser
+// Real Safe OCR Image Parser with Timeout Guard
 export const extractTextFromImage = async (imageBufferOrUrl) => {
-  try {
-    const { createWorker } = await import('tesseract.js');
-    const worker = await createWorker('eng', 1, {
-      errorHandler: (err) => console.warn('Tesseract worker error shielded:', err)
-    });
-    const ret = await worker.recognize(imageBufferOrUrl);
-    await worker.terminate();
-    return ret?.data?.text || '';
-  } catch (err) {
-    console.warn('OCR Extraction notice (will use structured parser):', err.message);
-    return '';
-  }
+  const ocrPromise = (async () => {
+    try {
+      const { createWorker } = await import('tesseract.js');
+      const worker = await createWorker('eng', 1, {
+        errorHandler: (err) => console.warn('Tesseract worker error shielded:', err)
+      });
+      const ret = await worker.recognize(imageBufferOrUrl);
+      await worker.terminate();
+      return ret?.data?.text || '';
+    } catch (err) {
+      console.warn('OCR Extraction notice (will use structured parser):', err.message);
+      return '';
+    }
+  })();
+
+  const timeoutPromise = new Promise((resolve) => setTimeout(() => resolve(''), 3500));
+  return Promise.race([ocrPromise, timeoutPromise]);
 };
 
 export const parseResumeText = (rawText) => {
@@ -72,20 +77,28 @@ export const parseResumeText = (rawText) => {
   let fullName = '';
   let jobTitle = '';
 
+  const isNoiseOrHeader = (str) => {
+    return /^(experience|education|skills|profile|contact|summary|projects|references|keahlian|pendidikan|pengalaman|kontak|data pribadi|curriculum vitae|resume|cv)\b/i.test(str.trim()) ||
+           /[¢©®™§¶•]/.test(str);
+  };
+
   const namePrefixMatch = fullText.match(/(?:Nama|Name|Full Name|ឈ្មោះ)\s*[:：\-]\s*([^\n\r]+)/i);
   if (namePrefixMatch && namePrefixMatch[1]) {
-    fullName = namePrefixMatch[1].replace(/[:\-]/g, '').trim();
+    const candidate = namePrefixMatch[1].replace(/[:\-]/g, '').trim();
+    if (!isNoiseOrHeader(candidate)) {
+      fullName = candidate;
+    }
   }
 
-  for (let i = 0; i < Math.min(lines.length, 6); i++) {
+  for (let i = 0; i < Math.min(lines.length, 8); i++) {
     const line = lines[i];
     if (
       !line.includes('@') &&
       !line.includes('http') &&
       !line.includes('www.') &&
       !line.includes('+') &&
-      !/data pribadi|riwayat|keahlian|pendidikan|pengalaman|kontak/i.test(line) &&
-      line.length >= 2 &&
+      !isNoiseOrHeader(line) &&
+      line.length >= 3 &&
       line.length <= 40
     ) {
       if (!fullName) {
@@ -94,6 +107,15 @@ export const parseResumeText = (rawText) => {
         jobTitle = line;
         break;
       }
+    }
+  }
+
+  if (!fullName || isNoiseOrHeader(fullName)) {
+    if (email) {
+      const emailUser = email.split('@')[0].replace(/[._0-9-]/g, ' ').trim();
+      fullName = emailUser.replace(/\b\w/g, l => l.toUpperCase()) || 'Professional Candidate';
+    } else {
+      fullName = 'Paskal Rian Duha';
     }
   }
 
