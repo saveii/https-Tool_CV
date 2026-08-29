@@ -35,18 +35,31 @@ export const PreviewContainer = () => {
   const updateFitScale = () => {
     if (canvasAreaRef.current) {
       const areaWidth = canvasAreaRef.current.clientWidth;
-      // Standard A4 width at 96 DPI is 794px (~210mm)
-      const padding = window.innerWidth < 640 ? 16 : 32;
-      const availableWidth = areaWidth - padding;
-      const scaleRatio = Math.max(Math.min(availableWidth / 794, 1), 0.35);
-      setFitScale(scaleRatio);
+      if (areaWidth > 0) {
+        // Standard A4 width at 96 DPI is 794px (~210mm)
+        const padding = window.innerWidth < 640 ? 16 : 32;
+        const availableWidth = areaWidth - padding;
+        const scaleRatio = Math.max(Math.min(availableWidth / 794, 1), 0.35);
+        setFitScale(scaleRatio);
+      }
     }
   };
 
   useEffect(() => {
     updateFitScale();
-    window.addEventListener('resize', updateFitScale);
-    return () => window.removeEventListener('resize', updateFitScale);
+    const handleResize = () => updateFitScale();
+    window.addEventListener('resize', handleResize);
+
+    let observer;
+    if (canvasAreaRef.current && window.ResizeObserver) {
+      observer = new ResizeObserver(() => updateFitScale());
+      observer.observe(canvasAreaRef.current);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (observer) observer.disconnect();
+    };
   }, []);
 
   const renderTemplate = () => {

@@ -86,9 +86,21 @@ const MainApp = () => {
     };
   }, [isDragging]);
 
-  // Responsive desktop detection (>= 1024px)
+  // Window resize listener for rock-solid desktop vs mobile detection
+  const [isDesktop, setIsDesktop] = useState(() => {
+    return typeof window !== 'undefined' ? window.innerWidth >= 1024 : true;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col font-sans text-slate-100 selection:bg-blue-600 selection:text-white pb-16 xl:pb-0">
+    <div className="min-h-screen bg-slate-950 flex flex-col font-sans text-slate-100 selection:bg-blue-600 selection:text-white pb-16 lg:pb-0">
       {/* Top Navbar */}
       <Navbar
         onOpenProfileModal={() => setIsProfileModalOpen(true)}
@@ -99,13 +111,15 @@ const MainApp = () => {
       {/* Main Workspace: Draggable Split Screen on PC / Full-Width Tab-Switched on Mobile Phone */}
       <main
         ref={mainContainerRef}
-        style={{ '--split-ratio': `${splitRatio}%`, '--split-remaining': `${100 - splitRatio}%` }}
         className="flex-1 p-2 sm:p-3 lg:p-4 flex flex-col lg:flex-row overflow-hidden h-[calc(100dvh-7.5rem)] lg:h-[calc(100vh-4rem)] relative select-none lg:select-auto"
       >
-        {/* Left Side: Interactive CV Form Editor (Dynamic Resizable Width on Desktop, 100% on Mobile) */}
+        {/* Left Side: Interactive CV Form Editor (100% Full Width on Mobile, Resizable % on PC) */}
         <section
-          className={`h-full flex flex-col w-full lg:w-[var(--split-ratio)] ${
-            mobileView === 'form' || mobileView === 'style' ? 'flex' : 'hidden lg:flex'
+          style={isDesktop ? { width: `${splitRatio}%` } : { width: '100%' }}
+          className={`h-full flex flex-col ${
+            isDesktop
+              ? 'flex'
+              : (mobileView === 'form' || mobileView === 'style' ? 'flex w-full' : 'hidden')
           }`}
         >
           <div className="h-full pr-0 lg:pr-1.5 flex flex-col">
@@ -113,34 +127,39 @@ const MainApp = () => {
           </div>
         </section>
 
-        {/* Draggable Divider Bar with Grip Handle (Desktop Only) */}
-        <div
-          onMouseDown={handleMouseDown}
-          onTouchStart={handleTouchStart}
-          onDoubleClick={() => setSplitRatio(48)}
-          className={`hidden lg:flex flex-col items-center justify-center relative z-20 cursor-col-resize group px-1 select-none transition-colors ${
-            isDragging ? 'bg-blue-600/30' : 'hover:bg-blue-600/20'
-          }`}
-          style={{ width: '18px' }}
-          title={language === 'km' ? 'ទាញរំកិលទៅឆ្វេង/ស្តាំ ដើម្បីពង្រីក-បង្រួម Editor / Preview (ចុច 2 ដងដើម្បី Reset 50/50)' : 'Drag left/right to resize Editor / Preview (Double-click to reset)'}
-        >
-          {/* Subtle Vertical Track Line */}
+        {/* Draggable Divider Bar with Grip Handle (Desktop Only >= 1024px) */}
+        {isDesktop && (
           <div
-            className={`w-1 h-full rounded-full transition-all duration-200 ${
-              isDragging ? 'bg-blue-500 shadow-lg shadow-blue-500/50 scale-x-125' : 'bg-slate-800 group-hover:bg-blue-500/70'
+            onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
+            onDoubleClick={() => setSplitRatio(48)}
+            className={`hidden lg:flex flex-col items-center justify-center relative z-20 cursor-col-resize group px-1 select-none transition-colors ${
+              isDragging ? 'bg-blue-600/30' : 'hover:bg-blue-600/20'
             }`}
-          />
+            style={{ width: '16px' }}
+            title={language === 'km' ? 'ទាញរំកិលទៅឆ្វេង/ស្តាំ ដើម្បីពង្រីក-បង្រួម Editor / Preview (ចុច 2 ដងដើម្បី Reset 50/50)' : 'Drag left/right to resize Editor / Preview (Double-click to reset)'}
+          >
+            {/* Subtle Vertical Track Line */}
+            <div
+              className={`w-1 h-full rounded-full transition-all duration-200 ${
+                isDragging ? 'bg-blue-500 shadow-lg shadow-blue-500/50 scale-x-125' : 'bg-slate-800 group-hover:bg-blue-500/70'
+              }`}
+            />
 
-          {/* Center Grip Handle with Arrow Hint */}
-          <div className="absolute top-1/2 -translate-y-1/2 flex items-center justify-center p-1 bg-slate-900 border border-slate-700/80 rounded-full shadow-2xl group-hover:border-blue-500/60 group-hover:scale-110 transition">
-            <GripVertical className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-400" />
+            {/* Center Grip Handle with Arrow Hint */}
+            <div className="absolute top-1/2 -translate-y-1/2 flex items-center justify-center p-1 bg-slate-900 border border-slate-700/80 rounded-full shadow-2xl group-hover:border-blue-500/60 group-hover:scale-110 transition">
+              <GripVertical className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-400" />
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Right Side: Live Synchronized A4 Preview (Dynamic Resizable Width on Desktop, 100% on Mobile) */}
+        {/* Right Side: Live Synchronized A4 Preview (100% Full Width on Mobile, Resizable % on PC) */}
         <section
-          className={`h-full flex flex-col w-full lg:w-[var(--split-remaining)] ${
-            mobileView === 'preview' ? 'flex' : 'hidden lg:flex'
+          style={isDesktop ? { width: `${100 - splitRatio}%` } : { width: '100%' }}
+          className={`h-full flex flex-col ${
+            isDesktop
+              ? 'flex'
+              : (mobileView === 'preview' ? 'flex w-full' : 'hidden')
           }`}
         >
           <div className="h-full pl-0 lg:pl-1.5 flex flex-col">
@@ -149,7 +168,7 @@ const MainApp = () => {
         </section>
       </main>
 
-      {/* Mobile Bottom Navigation Bar (< 1280px) */}
+      {/* Mobile Bottom Navigation Bar (Hidden on PC >= 1024px) */}
       <MobileBottomNav
         mobileView={mobileView}
         setMobileView={setMobileView}

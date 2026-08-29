@@ -106,19 +106,19 @@ export const PersonalInfoForm = () => {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="px-3 py-1.5 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition"
+                className="px-3 py-1.5 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition whitespace-nowrap"
               >
-                <Upload className="w-3.5 h-3.5" />
-                {personalInfo.photo ? (language === 'km' ? 'ប្តូររូបថត' : 'Change Photo') : (language === 'km' ? 'បញ្ចូលរូបថត' : 'Upload Photo')}
+                <Upload className="w-3.5 h-3.5 shrink-0" />
+                <span>{personalInfo.photo ? (language === 'km' ? 'ប្តូររូបថត' : 'Change Photo') : (language === 'km' ? 'បញ្ចូលរូបថត' : 'Upload Photo')}</span>
               </button>
 
               {personalInfo.photo && (
                 <button
                   type="button"
                   onClick={openCropEditor}
-                  className="px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition"
+                  className="px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition whitespace-nowrap"
                 >
-                  <Crop className="w-3.5 h-3.5" />
+                  <Crop className="w-3.5 h-3.5 shrink-0" />
                   <span>{language === 'km' ? 'កែតម្រូវទំហំ & កាត់រូប' : 'Crop & Resize'}</span>
                 </button>
               )}

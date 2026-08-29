@@ -34,7 +34,7 @@ export const MobileBottomNav = ({
   const isStyleActive = mobileView === 'style' || (mobileView === 'form' && activeTab === 'customize');
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 border-t border-slate-800 backdrop-blur-xl px-2 pt-1.5 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] flex items-center justify-around xl:hidden shadow-2xl">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 border-t border-slate-800 backdrop-blur-xl px-2 pt-1.5 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] flex items-center justify-around lg:hidden shadow-2xl">
       {/* 1. Editor Form Tab */}
       <button
         onClick={handleFormTab}
