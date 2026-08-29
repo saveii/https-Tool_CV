@@ -85,8 +85,36 @@
     margin: 0 !important;
   }
 
-  .no-print {
+  header,
+  nav,
+  aside,
+  form,
+  .no-print,
+  button,
+  input,
+  textarea,
+  select,
+  .lg\:hidden,
+  #root > div > header,
+  #root > div > main > section:first-child,
+  #root > div > main > div:nth-child(2) {
     display: none !important;
+  }
+
+  #root,
+  #root > div,
+  #root > div > main,
+  #root > div > main > section:last-child,
+  #root > div > main > section:last-child > div,
+  #cv-preview-sheet {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
   }
 
   .a4-sheet {
@@ -94,11 +122,11 @@
     transform: none !important;
     margin: 0 !important;
     width: 100% !important;
-    height: 100% !important;
+    min-height: 297mm !important;
   }
 
   @page {
-    size: A4;
+    size: A4 portrait;
     margin: 0mm;
   }
 }
