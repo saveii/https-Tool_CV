@@ -100,16 +100,16 @@ export const EditorContainer = ({ onOpenAIImportModal }) => {
           onClick={onOpenAIImportModal}
           className="w-full p-2.5 sm:p-3 bg-gradient-to-r from-blue-900/30 via-indigo-900/30 to-purple-900/30 hover:from-blue-900/50 hover:via-indigo-900/50 hover:to-purple-900/50 border border-blue-500/30 hover:border-blue-400/50 rounded-xl flex items-center justify-between text-left transition group shadow-lg shadow-indigo-500/5"
         >
-          <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-tr from-blue-500 to-purple-500 text-white flex items-center justify-center shadow-md shrink-0">
+          <div className="flex items-center gap-2.5 min-w-0 flex-1">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-500 to-purple-500 text-white flex items-center justify-center shadow-md shrink-0">
               <Sparkles className="w-4 h-4 animate-pulse" />
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <div className="text-xs font-bold text-white group-hover:text-blue-300 transition truncate">
                 {t('aiSmartFillBtn')}
               </div>
-              <div className="text-[10px] sm:text-[10.5px] text-slate-400 truncate">
-                PDF, PNG, JPG, Text • Auto-extract name, jobs & skills
+              <div className="text-[10px] sm:text-[11px] text-slate-400 truncate mt-0.5">
+                {t('supportedFormats')}
               </div>
             </div>
           </div>
