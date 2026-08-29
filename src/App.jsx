@@ -88,13 +88,15 @@ const MainApp = () => {
 
   // Window resize listener for rock-solid desktop vs mobile detection
   const [isDesktop, setIsDesktop] = useState(() => {
-    return typeof window !== 'undefined' ? window.innerWidth >= 1024 : true;
+    if (typeof window === 'undefined') return false;
+    return window.innerWidth >= 1024;
   });
 
   useEffect(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 1024);
     };
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -111,15 +113,13 @@ const MainApp = () => {
       {/* Main Workspace: Draggable Split Screen on PC / Full-Width Tab-Switched on Mobile Phone */}
       <main
         ref={mainContainerRef}
-        className="flex-1 p-2 sm:p-3 lg:p-4 flex flex-col lg:flex-row overflow-hidden h-[calc(100dvh-7.5rem)] lg:h-[calc(100vh-4rem)] relative select-none lg:select-auto"
+        className="flex-1 p-2 sm:p-3 lg:p-4 flex flex-col lg:flex-row overflow-hidden h-[calc(100dvh-7.5rem)] lg:h-[calc(100vh-4rem)] relative"
       >
         {/* Left Side: Interactive CV Form Editor (100% Full Width on Mobile, Resizable % on PC) */}
         <section
-          style={isDesktop ? { width: `${splitRatio}%` } : { width: '100%' }}
-          className={`h-full flex flex-col ${
-            isDesktop
-              ? 'flex'
-              : (mobileView === 'form' || mobileView === 'style' ? 'flex w-full' : 'hidden')
+          style={isDesktop ? { width: `${splitRatio}%` } : undefined}
+          className={`h-full flex-col w-full lg:w-auto ${
+            mobileView === 'preview' ? 'hidden lg:flex' : 'flex'
           }`}
         >
           <div className="h-full pr-0 lg:pr-1.5 flex flex-col">
@@ -155,11 +155,9 @@ const MainApp = () => {
 
         {/* Right Side: Live Synchronized A4 Preview (100% Full Width on Mobile, Resizable % on PC) */}
         <section
-          style={isDesktop ? { width: `${100 - splitRatio}%` } : { width: '100%' }}
-          className={`h-full flex flex-col ${
-            isDesktop
-              ? 'flex'
-              : (mobileView === 'preview' ? 'flex w-full' : 'hidden')
+          style={isDesktop ? { width: `${100 - splitRatio}%` } : undefined}
+          className={`h-full flex-col w-full lg:w-auto ${
+            mobileView === 'preview' ? 'flex' : 'hidden lg:flex'
           }`}
         >
           <div className="h-full pl-0 lg:pl-1.5 flex flex-col">
@@ -184,6 +182,7 @@ const MainApp = () => {
       <ProfileModal
         isOpen={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
+        onOpenAdminModal={() => setIsAdminModalOpen(true)}
       />
 
       {/* AI Smart CV Import Modal */}

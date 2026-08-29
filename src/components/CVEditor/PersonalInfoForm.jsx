@@ -138,7 +138,7 @@ export const PersonalInfoForm = () => {
                 <label className="block text-[10.5px] font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
                   {language === 'km' ? 'រាងរូបថតលើ CV' : 'CV Photo Shape'}
                 </label>
-                <div className="flex gap-1.5">
+                <div className="grid grid-cols-3 gap-1.5">
                   {[
                     { id: 'circle', label: language === 'km' ? 'មូល' : 'Circle' },
                     { id: 'rounded', label: language === 'km' ? 'ជ្រុងកោង' : 'Rounded' },
@@ -151,7 +151,7 @@ export const PersonalInfoForm = () => {
                         updatePersonalInfo('photoShape', s.id);
                         updateSetting('photoShape', s.id);
                       }}
-                      className={`flex-1 py-1.5 text-[11px] font-medium rounded-lg border transition ${
+                      className={`py-1.5 px-1 text-[11px] font-medium rounded-lg border transition text-center truncate ${
                         currentShape === s.id
                           ? 'bg-blue-600 text-white border-blue-500 shadow-sm font-bold'
                           : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
@@ -173,7 +173,7 @@ export const PersonalInfoForm = () => {
                     {currentSize}px
                   </span>
                 </div>
-                <div className="flex gap-1.5">
+                <div className="grid grid-cols-4 gap-1">
                   {[
                     { size: 85, label: language === 'km' ? 'តូច' : 'Small' },
                     { size: 115, label: language === 'km' ? 'មធ្យម' : 'Medium' },
@@ -187,7 +187,7 @@ export const PersonalInfoForm = () => {
                         updatePersonalInfo('photoSize', sz.size);
                         updateSetting('photoSize', sz.size);
                       }}
-                      className={`flex-1 py-1.5 text-[11px] font-medium rounded-lg border transition ${
+                      className={`py-1.5 px-0.5 text-[10.5px] font-medium rounded-lg border transition text-center truncate ${
                         Math.abs(currentSize - sz.size) <= 5
                           ? 'bg-blue-600 text-white border-blue-500 shadow-sm font-bold'
                           : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
