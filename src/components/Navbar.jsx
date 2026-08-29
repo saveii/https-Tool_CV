@@ -59,7 +59,7 @@ export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportMod
             <span className="font-extrabold text-base sm:text-lg tracking-tight text-white bg-gradient-to-r from-white via-slate-200 to-blue-400 bg-clip-text text-transparent">
               {t('brandTitle')}
             </span>
-            <span className="px-1.5 sm:px-2 py-0.5 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full">
+            <span className="hidden sm:inline-block px-1.5 sm:px-2 py-0.5 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full">
               {t('proBuilder')}
             </span>
           </div>
