@@ -16,15 +16,30 @@ export const MobileBottomNav = ({
   onOpenProfile,
   onOpenAdmin
 }) => {
-  const { user, t, language } = useCV();
+  const { user, t, language, activeTab, setActiveTab } = useCV();
+
+  const handleFormTab = () => {
+    if (activeTab === 'customize') {
+      setActiveTab('personalInfo');
+    }
+    setMobileView('form');
+  };
+
+  const handleStyleTab = () => {
+    setActiveTab('customize');
+    setMobileView('form');
+  };
+
+  const isFormActive = mobileView === 'form' && activeTab !== 'customize';
+  const isStyleActive = mobileView === 'style' || (mobileView === 'form' && activeTab === 'customize');
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 border-t border-slate-800 backdrop-blur-xl px-2 pt-1.5 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] flex items-center justify-around xl:hidden shadow-2xl">
       {/* 1. Editor Form Tab */}
       <button
-        onClick={() => setMobileView('form')}
+        onClick={handleFormTab}
         className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition ${
-          mobileView === 'form'
+          isFormActive
             ? 'text-blue-400 font-bold bg-blue-500/10'
             : 'text-slate-400 hover:text-slate-200'
         }`}
@@ -59,9 +74,9 @@ export const MobileBottomNav = ({
 
       {/* 4. Style & Templates */}
       <button
-        onClick={() => setMobileView('style')}
+        onClick={handleStyleTab}
         className={`flex flex-col items-center gap-1 py-1 px-2.5 rounded-xl transition ${
-          mobileView === 'style'
+          isStyleActive
             ? 'text-blue-400 font-bold bg-blue-500/10'
             : 'text-slate-400 hover:text-slate-200'
         }`}

@@ -86,8 +86,21 @@ const MainApp = () => {
     };
   }, [isDragging]);
 
+  // Responsive desktop detection (>= 1024px)
+  const [isDesktop, setIsDesktop] = useState(() => {
+    return typeof window !== 'undefined' ? window.innerWidth >= 1024 : true;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col font-sans text-slate-100 selection:bg-blue-600 selection:text-white pb-14 xl:pb-0">
+    <div className="min-h-screen bg-slate-950 flex flex-col font-sans text-slate-100 selection:bg-blue-600 selection:text-white pb-16 xl:pb-0">
       {/* Top Navbar */}
       <Navbar
         onOpenProfileModal={() => setIsProfileModalOpen(true)}
@@ -95,14 +108,14 @@ const MainApp = () => {
         onOpenAdminModal={() => setIsAdminModalOpen(true)}
       />
 
-      {/* Main Workspace: Draggable Split Screen on PC / Tab-Switched on Mobile Phone */}
+      {/* Main Workspace: Draggable Split Screen on PC / Full-Width Tab-Switched on Mobile Phone */}
       <main
         ref={mainContainerRef}
-        className="flex-1 p-2 sm:p-3 lg:p-4 flex flex-col lg:flex-row overflow-hidden h-[calc(100vh-4rem)] relative select-none lg:select-auto"
+        className="flex-1 p-2 sm:p-3 lg:p-4 flex flex-col lg:flex-row overflow-hidden h-[calc(100dvh-7.5rem)] lg:h-[calc(100vh-4rem)] relative select-none lg:select-auto"
       >
-        {/* Left Side: Interactive CV Form Editor (Dynamic Resizable Width) */}
+        {/* Left Side: Interactive CV Form Editor (Dynamic Resizable Width on Desktop, 100% on Mobile) */}
         <section
-          style={{ width: mobileView === 'preview' ? '100%' : `${splitRatio}%` }}
+          style={isDesktop ? { width: `${splitRatio}%` } : { width: '100%' }}
           className={`h-full flex flex-col ${
             mobileView === 'form' || mobileView === 'style' ? 'w-full flex' : 'hidden lg:flex'
           }`}
@@ -136,9 +149,9 @@ const MainApp = () => {
           </div>
         </div>
 
-        {/* Right Side: Live Synchronized A4 Preview (Dynamic Resizable Width) */}
+        {/* Right Side: Live Synchronized A4 Preview (Dynamic Resizable Width on Desktop, 100% on Mobile) */}
         <section
-          style={{ width: mobileView === 'preview' ? '100%' : `${100 - splitRatio}%` }}
+          style={isDesktop ? { width: `${100 - splitRatio}%` } : { width: '100%' }}
           className={`h-full flex flex-col ${
             mobileView === 'preview' ? 'w-full flex' : 'hidden lg:flex'
           }`}

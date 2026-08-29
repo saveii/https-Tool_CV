@@ -94,26 +94,26 @@ export const EditorContainer = ({ onOpenAIImportModal }) => {
       </div>
 
       {/* AI Smart Import Quick Action Banner */}
-      <div className="px-5 pt-4">
+      <div className="px-3 sm:px-5 pt-3 sm:pt-4 shrink-0">
         <button
           type="button"
           onClick={onOpenAIImportModal}
-          className="w-full p-2.5 bg-gradient-to-r from-blue-900/30 via-indigo-900/30 to-purple-900/30 hover:from-blue-900/50 hover:via-indigo-900/50 hover:to-purple-900/50 border border-blue-500/30 hover:border-blue-400/50 rounded-xl flex items-center justify-between text-left transition group shadow-lg shadow-indigo-500/5"
+          className="w-full p-2.5 sm:p-3 bg-gradient-to-r from-blue-900/30 via-indigo-900/30 to-purple-900/30 hover:from-blue-900/50 hover:via-indigo-900/50 hover:to-purple-900/50 border border-blue-500/30 hover:border-blue-400/50 rounded-xl flex items-center justify-between text-left transition group shadow-lg shadow-indigo-500/5"
         >
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-500 to-purple-500 text-white flex items-center justify-center shadow-md">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-tr from-blue-500 to-purple-500 text-white flex items-center justify-center shadow-md shrink-0">
               <Sparkles className="w-4 h-4 animate-pulse" />
             </div>
-            <div>
-              <div className="text-xs font-bold text-white group-hover:text-blue-300 transition">
+            <div className="min-w-0">
+              <div className="text-xs font-bold text-white group-hover:text-blue-300 transition truncate">
                 {t('aiSmartFillBtn')}
               </div>
-              <div className="text-[10.5px] text-slate-400">
+              <div className="text-[10px] sm:text-[10.5px] text-slate-400 truncate">
                 PDF, PNG, JPG, Text • Auto-extract name, jobs & skills
               </div>
             </div>
           </div>
-          <span className="text-[11px] font-semibold text-blue-400 flex items-center gap-1 group-hover:translate-x-1 transition pr-1">
+          <span className="text-[11px] font-semibold text-blue-400 flex items-center gap-1 group-hover:translate-x-1 transition pr-1 shrink-0 ml-2">
             <span>Import</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </span>
@@ -121,7 +121,7 @@ export const EditorContainer = ({ onOpenAIImportModal }) => {
       </div>
 
       {/* Form Content Area */}
-      <div className="flex-1 overflow-y-auto p-5 custom-scroll">
+      <div className="flex-1 overflow-y-auto p-3.5 sm:p-5 custom-scroll pb-10">
         {renderActiveTabContent()}
       </div>
     </div>

@@ -106,8 +106,8 @@ export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportMod
         </div>
       </div>
 
-      {/* Right Action Tools (Desktop only - Mobile uses bottom Profile / Account tab) */}
-      <div className="hidden lg:flex items-center gap-1.5 sm:gap-2">
+      {/* Right Action Tools (Language, Theme, Save, and Menu) */}
+      <div className="flex items-center gap-1 sm:gap-2">
         {/* Language Switcher Dropdown */}
         <div className="relative">
           <button
@@ -361,9 +361,9 @@ export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportMod
           )}
         </div>
 
-        {/* User Account / Auth Trigger */}
+        {/* User Account / Auth Trigger (Desktop only - mobile has bottom Account tab) */}
         {user ? (
-          <div className="flex items-center gap-1.5 pl-1 sm:pl-2 border-l border-slate-800">
+          <div className="hidden lg:flex items-center gap-1.5 pl-1 sm:pl-2 border-l border-slate-800">
             <button
               onClick={onOpenProfileModal}
               className="flex items-center gap-1.5 p-1 sm:pl-2 bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-xl transition"
@@ -391,7 +391,7 @@ export const Navbar = ({ onOpenProfileModal, onOpenAdminModal, onOpenAIImportMod
               setAuthModalTab('login');
               setIsAuthModalOpen(true);
             }}
-            className="px-2.5 sm:px-3 py-1.5 bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-lg text-xs font-semibold flex items-center gap-1 transition"
+            className="hidden lg:flex px-2.5 sm:px-3 py-1.5 bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-lg text-xs font-semibold items-center gap-1 transition"
           >
             <User className="w-3.5 h-3.5" />
             <span className="hidden xs:inline">{t('loginRegister')}</span>
