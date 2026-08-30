@@ -89,11 +89,13 @@ const MainApp = () => {
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col font-sans text-slate-100 selection:bg-blue-600 selection:text-white pb-14 xl:pb-0">
       {/* Top Navbar */}
-      <Navbar
-        onOpenProfileModal={() => setIsProfileModalOpen(true)}
-        onOpenAIImportModal={() => setIsAIImportModalOpen(true)}
-        onOpenAdminModal={() => setIsAdminModalOpen(true)}
-      />
+      <div className="no-print">
+        <Navbar
+          onOpenProfileModal={() => setIsProfileModalOpen(true)}
+          onOpenAIImportModal={() => setIsAIImportModalOpen(true)}
+          onOpenAdminModal={() => setIsAdminModalOpen(true)}
+        />
+      </div>
 
       {/* Main Workspace: Draggable Split Screen on PC / Tab-Switched on Mobile Phone */}
       <main
@@ -103,7 +105,7 @@ const MainApp = () => {
         {/* Left Side: Interactive CV Form Editor (Dynamic Resizable Width) */}
         <section
           style={{ width: mobileView === 'preview' ? '100%' : `${splitRatio}%` }}
-          className={`h-full flex flex-col ${
+          className={`no-print h-full flex flex-col ${
             mobileView === 'form' || mobileView === 'style' ? 'w-full flex' : 'hidden lg:flex'
           }`}
         >
@@ -117,7 +119,7 @@ const MainApp = () => {
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
           onDoubleClick={() => setSplitRatio(48)}
-          className={`hidden lg:flex flex-col items-center justify-center relative z-20 cursor-col-resize group px-1 select-none transition-colors ${
+          className={`no-print hidden lg:flex flex-col items-center justify-center relative z-20 cursor-col-resize group px-1 select-none transition-colors ${
             isDragging ? 'bg-blue-600/30' : 'hover:bg-blue-600/20'
           }`}
           style={{ width: '18px' }}
@@ -150,13 +152,15 @@ const MainApp = () => {
       </main>
 
       {/* Mobile Bottom Navigation Bar (< 1280px) */}
-      <MobileBottomNav
-        mobileView={mobileView}
-        setMobileView={setMobileView}
-        onOpenAIImport={() => setIsAIImportModalOpen(true)}
-        onOpenProfile={() => setIsProfileModalOpen(true)}
-        onOpenAdmin={() => setIsAdminModalOpen(true)}
-      />
+      <div className="no-print">
+        <MobileBottomNav
+          mobileView={mobileView}
+          setMobileView={setMobileView}
+          onOpenAIImport={() => setIsAIImportModalOpen(true)}
+          onOpenProfile={() => setIsProfileModalOpen(true)}
+          onOpenAdmin={() => setIsAdminModalOpen(true)}
+        />
+      </div>
 
       {/* Gate Auth Modal (Login / Register / Social) */}
       <AuthModal />

@@ -191,14 +191,6 @@ export const PreviewContainer = () => {
           </div>
 
           <button
-            onClick={() => window.print()}
-            className="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-medium transition hidden sm:flex items-center"
-            title={t('browserPrint')}
-          >
-            <Printer className="w-3.5 h-3.5" />
-          </button>
-
-          <button
             onClick={toggleFullscreen}
             className="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-medium transition hidden sm:flex items-center"
             title={t('toggleFullscreen')}
