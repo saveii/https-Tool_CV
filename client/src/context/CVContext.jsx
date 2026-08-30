@@ -666,28 +666,79 @@ export const CVProvider = ({ children }) => {
       triggerConfetti();
       showToast(language === 'km' ? '🎉 បានទាញយក PDF គុណភាពខ្ពស់ដោយជោគជ័យ!' : '🎉 High-Quality PDF downloaded successfully!');
     } catch (err) {
-      console.warn('Puppeteer error fallback to client print/html2pdf:', err);
-      try {
-        const element = document.getElementById('cv-preview-sheet');
-        if (element) {
-          const opt = {
-            margin: 0,
-            filename: `${(cvData.personalInfo?.fullName || 'CV').replace(/\s+/g, '_')}_Resume.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-          };
-          const html2pdf = (await import('html2pdf.js')).default;
-          await html2pdf().set(opt).from(element).save();
-          triggerConfetti();
-          showToast(language === 'km' ? '🎉 បានទាញយក PDF តាមរយៈ Browser Renderer!' : '🎉 PDF downloaded via browser renderer!');
-        } else {
-          window.print();
-        }
-      } catch (clientErr) {
-        console.error('Client PDF error:', clientErr);
-        window.print();
+      // 2. Client-Side html2pdf.js Direct PDF Generator
+      const originalSheet = document.getElementById('cv-preview-sheet');
+      if (!originalSheet) {
+        throw new Error('CV sheet element not found in DOM');
       }
+
+      // Create an off-screen, unscaled A4 container (794px x 1123px)
+      const container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.top = '0';
+      container.style.left = '-9999px';
+      container.style.width = '794px';
+      container.style.minHeight = '1123px';
+      container.style.zIndex = '-9999';
+      container.style.backgroundColor = '#ffffff';
+      container.style.color = '#1f2937';
+
+      // Deep clone the CV preview sheet
+      const clone = originalSheet.cloneNode(true);
+      clone.style.transform = 'none';
+      clone.style.transformOrigin = 'top left';
+      clone.style.width = '794px';
+      clone.style.minHeight = '1123px';
+      clone.style.margin = '0';
+      clone.style.padding = '0';
+      clone.style.boxShadow = 'none';
+      clone.style.display = 'block';
+
+      container.appendChild(clone);
+      document.body.appendChild(container);
+
+      try {
+        const html2pdfModule = await import('html2pdf.js');
+        const html2pdf = html2pdfModule.default || html2pdfModule;
+
+        const safeFileName = `${(cvData.personalInfo?.fullName || 'CV').trim().replace(/[^a-zA-Z0-9\u1780-\u17FF_-]/g, '_')}_Resume.pdf`;
+
+        const opt = {
+          margin: 0,
+          filename: safeFileName,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            logging: false,
+            scrollY: 0,
+            scrollX: 0
+          },
+          jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait'
+          }
+        };
+
+        await html2pdf().set(opt).from(clone).save();
+
+        triggerConfetti();
+        showToast(language === 'km' ? '🎉 បានទាញយក File PDF ដោយជោគជ័យ!' : '🎉 PDF file downloaded successfully!');
+      } finally {
+        if (container.parentNode) {
+          container.parentNode.removeChild(container);
+        }
+      }
+    } catch (err) {
+      console.error('PDF Export Error:', err);
+      showToast(
+        language === 'km'
+          ? 'មិនអាចទាញយក PDF បានទេ សូមសាកល្បងម្តងទៀត'
+          : 'Could not generate PDF. Please try again.',
+        'error'
+      );
     } finally {
       setIsExporting(false);
     }
